@@ -251,6 +251,7 @@ function showPlayButton(clientDir) {
   patchNotes.style.boxSizing = 'border-box';
   patchNotes.className = 'patch-notes';
   patchNotes.style.zIndex = '1';
+  patchNotes.style['-webkit-app-region'] = 'no-drag';
   patchNotes.innerHTML = PATCH_NOTES_HTML;
   document.body.appendChild(patchNotes);
 
@@ -275,6 +276,8 @@ function showPlayButton(clientDir) {
   playBtn.style.fontWeight = 'bold';
   playBtn.style.letterSpacing = '0.1em';
   playBtn.style.transition = 'background 0.2s';
+  playBtn.style.zIndex = '1';
+  playBtn.style['-webkit-app-region'] = 'no-drag';
   playBtn.onmouseover = () => playBtn.style.background = '#0d2238';
   playBtn.onmouseleave = () => playBtn.style.background = '#17406d';
   playBtn.onclick = () => {
@@ -299,6 +302,8 @@ function showPlayButton(clientDir) {
   addonsBtn.style.fontWeight = 'bold';
   addonsBtn.style.letterSpacing = '0.05em';
   addonsBtn.style.transition = 'background 0.2s';
+  addonsBtn.style.zIndex = '1';
+  addonsBtn.style['-webkit-app-region'] = 'no-drag';
   addonsBtn.onmouseover = () => addonsBtn.style.background = '#353a40';
   addonsBtn.onmouseleave = () => addonsBtn.style.background = '#23272e';
   // No function assigned for now
