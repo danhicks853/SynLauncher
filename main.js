@@ -45,6 +45,95 @@ ipcMain.handle('load-config', () => {
   return functions.loadConfig();
 });
 
+// =============================
+// Addons IPC Handlers
+// =============================
+
+ipcMain.handle('get-addons-list', async (event) => {
+  try {
+    const config = functions.loadConfig() || {};
+    const curated = constants.ADDONS;
+    const installed = functions.getInstalledAddons(config);
+    // Map curated list with install state
+    const list = curated.map(addon => {
+      const entry = installed.find(a => a.name === addon.name);
+      return {
+        ...addon,
+        installed: !!entry,
+        lastUpdated: entry ? entry.lastUpdated : null,
+        hash: entry ? entry.hash : null
+      };
+    });
+    return { success: true, addons: list };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+});
+
+ipcMain.handle('install-addon', async (event, addon, clientDir) => {
+  try {
+    const config = functions.loadConfig() || {};
+    const hash = await functions.fetchLatestCommitHash(addon.repo);
+    await functions.downloadAndExtractAddon(addon, clientDir);
+    const now = new Date().toISOString();
+    functions.saveAddonConfig(config, addon, hash, now);
+    functions.saveConfig(config);
+    return { success: true, hash, lastUpdated: now };
+  } catch (err) {
+    functions.handleAddonError(err, addon);
+    return { success: false, message: err.message };
+  }
+});
+
+ipcMain.handle('uninstall-addon', async (event, addon, clientDir) => {
+  try {
+    const config = functions.loadConfig() || {};
+    await functions.uninstallAddon(addon, clientDir);
+    functions.removeAddonConfig(config, addon);
+    functions.saveConfig(config);
+    return { success: true };
+  } catch (err) {
+    functions.handleAddonError(err, addon);
+    return { success: false, message: err.message };
+  }
+});
+
+ipcMain.handle('update-addon', async (event, addon, clientDir) => {
+  try {
+    const config = functions.loadConfig() || {};
+    const hash = await functions.fetchLatestCommitHash(addon.repo);
+    await functions.downloadAndExtractAddon(addon, clientDir);
+    const now = new Date().toISOString();
+    functions.saveAddonConfig(config, addon, hash, now);
+    functions.saveConfig(config);
+    return { success: true, hash, lastUpdated: now };
+  } catch (err) {
+    functions.handleAddonError(err, addon);
+    return { success: false, message: err.message };
+  }
+});
+
+ipcMain.handle('get-addon-hash', async (event, addon) => {
+  try {
+    const hash = await functions.fetchLatestCommitHash(addon.repo);
+    return { success: true, hash };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+});
+
+ipcMain.handle('auto-update-addons', async (event, clientDir) => {
+  try {
+    const config = functions.loadConfig() || {};
+    const curated = constants.ADDONS;
+    await functions.autoUpdateAddons(config, clientDir, curated);
+    functions.saveConfig(config);
+    return { success: true };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+});
+
 // Download logic (webtorrent) handled in renderer for simplicity
 
 const { getPatchDownloadLink } = require('./patch_scraper');

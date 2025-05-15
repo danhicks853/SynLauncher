@@ -104,6 +104,308 @@ function extractPatchVersion(filename) {
   return match ? parseInt(match[1], 10) : null;
 }
 
+// =============================
+// Addons System Backend Utils
+// =============================
+
+/** Returns the installed addons array from config (or empty array) */
+function getInstalledAddons(config) {
+  return (config && Array.isArray(config.addons)) ? config.addons : [];
+}
+
+/** Checks if an addon (by name or folder) is installed */
+function isAddonInstalled(config, addon) {
+  const installed = getInstalledAddons(config);
+  return installed.some(a => a.name === addon.name);
+}
+
+/** Gets the config entry for an addon */
+function getAddonConfigEntry(config, addon) {
+  const installed = getInstalledAddons(config);
+  return installed.find(a => a.name === addon.name) || null;
+}
+
+/** Adds or updates an addon in config (mutates config) */
+function saveAddonConfig(config, addon, hash, lastUpdated) {
+  if (!config.addons) config.addons = [];
+  const idx = config.addons.findIndex(a => a.name === addon.name);
+  if (idx !== -1) {
+    config.addons[idx] = { name: addon.name, hash, lastUpdated };
+  } else {
+    config.addons.push({ name: addon.name, hash, lastUpdated });
+  }
+}
+
+/** Removes an addon from config (mutates config) */
+function removeAddonConfig(config, addon) {
+  if (!config.addons) return;
+  config.addons = config.addons.filter(a => a.name !== addon.name);
+}
+
+/** Fetches the latest commit hash from Github for a repo (returns Promise<string>) */
+async function fetchLatestCommitHash(repo) {
+  const https = require('https');
+  // Remove trailing .git if present
+  let cleanRepo = repo.replace(/\.git$/, '');
+  const apiUrl = cleanRepo.replace('https://github.com/', 'https://api.github.com/repos/') + '/commits';
+  return new Promise((resolve, reject) => {
+    https.get(apiUrl, {
+      headers: {
+        'User-Agent': 'SynastriaLauncher',
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    }, res => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const commits = JSON.parse(data);
+          if (Array.isArray(commits) && commits.length > 0) {
+            resolve(commits[0].sha);
+          } else {
+            reject(new Error('No commits found'));
+          }
+        } catch (err) {
+          reject(err);
+        }
+      });
+    }).on('error', reject);
+  });
+}
+
+/** Downloads and extracts addon from Github repo's src folder to Addons dir */
+async function downloadAndExtractAddon(addon, clientDir) {
+  const https = require('https');
+  const AdmZip = require('adm-zip');
+  const fs = require('fs');
+  const path = require('path');
+  const os = require('os');
+  // Remove trailing .git if present
+  let cleanRepo = addon.repo.replace(/\.git$/, '');
+  const tmpZip = path.join(os.tmpdir(), addon.folder + '_latest.zip');
+  // Only try main.zip for now
+  let zipDownloaded = false;
+  let lastErr = null;
+  // (removed duplicate branch/zipUrl declaration, see below for correct branch logic)
+
+  // Helper to follow redirects (up to 3)
+  async function downloadWithRedirect(url, dest, redirects = 3) {
+    return new Promise((resolve, reject) => {
+      const file = fs.createWriteStream(dest);
+      https.get(url, res => {
+        console.log('HTTP status code for zip download:', res.statusCode);
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
+          // Follow redirect
+          file.close();
+          if (fs.existsSync(dest)) fs.unlinkSync(dest);
+          console.log('Following redirect to:', res.headers.location);
+          downloadWithRedirect(res.headers.location, dest, redirects - 1).then(resolve).catch(reject);
+          return;
+        }
+        if (res.statusCode !== 200) {
+          let body = '';
+          res.on('data', chunk => body += chunk);
+          res.on('end', () => {
+            file.close();
+            if (fs.existsSync(dest)) fs.unlinkSync(dest);
+            const log = [
+              'Zip download failed!',
+              'URL: ' + url,
+              'HTTP status code: ' + res.statusCode,
+              'Response body:',
+              body
+            ].join('\n');
+            console.error(log);
+            require('fs').writeFileSync('addon_download_error.log', log);
+            reject(new Error(`Failed to download zip: ${url} (HTTP ${res.statusCode})`));
+          });
+          return;
+        }
+        res.pipe(file);
+        file.on('finish', () => file.close(resolve));
+        file.on('error', reject);
+      }).on('error', reject);
+    });
+  }
+  // --- Hardcode branch for certain repos ---
+  let defaultBranch = 'main';
+  if (addon.repo.includes('ArkInventory-modified-for-attunements-')) {
+    defaultBranch = 'master';
+  } else if (addon.repo.includes('AtlasLoot_Mythic')) {
+    defaultBranch = 'master';
+  } else {
+    // --- Fetch default branch from GitHub API for all others ---
+    try {
+      const https = require('https');
+      const repoUrl = addon.repo.replace(/\.git$/, '');
+      const apiUrl = repoUrl.replace('https://github.com/', 'https://api.github.com/repos/');
+      defaultBranch = await new Promise((resolve, reject) => {
+        https.get(apiUrl, {
+          headers: {
+            'User-Agent': 'SynastriaLauncher',
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        }, res => {
+          let data = '';
+          res.on('data', chunk => data += chunk);
+          res.on('end', () => {
+            try {
+              const json = JSON.parse(data);
+              if (json.default_branch) resolve(json.default_branch);
+              else resolve('main');
+            } catch (e) {
+              resolve('main');
+            }
+          });
+        }).on('error', () => resolve('main'));
+      });
+    } catch (e) { /* fallback to main */ }
+  }
+
+  // --- Use correct branch for zip download ---
+  const zipUrl = addon.repo.replace(/\.git$/, '') + `/archive/refs/heads/${defaultBranch}.zip`;
+  console.log('Attempting to download addon zip from:', zipUrl);
+  // Try downloading from default branch, then fallback to 'main', then 'master'
+  const branchesToTry = [defaultBranch];
+  if (!branchesToTry.includes('main')) branchesToTry.push('main');
+  if (!branchesToTry.includes('master')) branchesToTry.push('master');
+  for (const branch of branchesToTry) {
+    const tryUrl = addon.repo.replace(/\.git$/, '') + `/archive/refs/heads/${branch}.zip`;
+    console.log('Attempting to download addon zip from:', tryUrl);
+    try {
+      await downloadWithRedirect(tryUrl, tmpZip, 3);
+      zipDownloaded = true;
+      break;
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  if (!zipDownloaded) {
+    throw lastErr || new Error('Failed to download addon zip from tried branches: ' + branchesToTry.join(', '));
+  }
+  // Extract only the src folder inside the zip to Addons dir
+  const zip = new AdmZip(tmpZip);
+  const entries = zip.getEntries();
+  const srcPrefix = entries[0].entryName.split('/')[0] + '/src/';
+  const addonDir = path.join(clientDir, 'Interface', 'AddOns');
+  if (!fs.existsSync(addonDir)) fs.mkdirSync(addonDir, { recursive: true });
+  // Find all top-level folders in src/
+  const topFolders = new Set();
+  entries.forEach(entry => {
+    if (entry.entryName.startsWith(srcPrefix) && entry.isDirectory) {
+      const rel = entry.entryName.substring(srcPrefix.length);
+      const top = rel.split('/')[0];
+      if (top) topFolders.add(top);
+    }
+  });
+  // For each top-level folder, extract all its contents to Interface/AddOns/<folder>
+  topFolders.forEach(folder => {
+    const destAddon = path.join(addonDir, folder);
+    if (fs.existsSync(destAddon)) {
+      fs.rmSync(destAddon, { recursive: true, force: true });
+    }
+    entries.forEach(entry => {
+      if (entry.entryName.startsWith(srcPrefix + folder + '/')) {
+        const relPath = entry.entryName.substring(srcPrefix.length + folder.length + 1);
+        if (relPath && !entry.isDirectory) {
+          const destPath = path.join(destAddon, relPath);
+          fs.mkdirSync(path.dirname(destPath), { recursive: true });
+          fs.writeFileSync(destPath, entry.getData());
+        }
+      }
+    });
+  });
+  fs.unlinkSync(tmpZip);
+}
+
+/** Uninstalls addon by removing its folder */
+function uninstallAddon(addon, clientDir) {
+  const path = require('path');
+  const fs = require('fs');
+  const addonsRoot = path.join(clientDir, 'Interface', 'AddOns');
+  // Only use wildcard for AtlasLoot and ArkInventory
+  if (fs.existsSync(addonsRoot) && (
+    addon.folder === 'ArkInventory' ||
+    addon.folder === 'AtlasLoot_Mythic' ||
+    addon.folder === 'AtlasLoot'
+  )) {
+    // For AtlasLoot, remove all folders starting with "AtlasLoot"
+    const wildcard = addon.folder.startsWith('AtlasLoot') ? 'AtlasLoot' : addon.folder;
+    const folders = fs.readdirSync(addonsRoot, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory() && dirent.name.startsWith(wildcard))
+      .map(dirent => dirent.name);
+    console.log('Attempting to delete folders:', folders);
+    for (const folder of folders) {
+      const fullPath = path.join(addonsRoot, folder);
+      try {
+        fs.rmSync(fullPath, { recursive: true, force: true });
+        console.log('Deleted:', fullPath);
+      } catch (err) {
+        console.error('Failed to delete:', fullPath, err);
+      }
+    }
+  } else {
+    // Default: only remove the exact folder
+    const exactPath = path.join(addonsRoot, addon.folder);
+    if (fs.existsSync(exactPath)) {
+      fs.rmSync(exactPath, { recursive: true, force: true });
+    }
+  }
+}
+
+/** Checks all curated addons and updates if hashes differ */
+async function autoUpdateAddons(config, clientDir, curatedAddons) {
+  // Only check installed addons
+  const installedAddons = Array.isArray(config.addons) ? config.addons : [];
+  for (const addon of curatedAddons) {
+    const entry = installedAddons.find(a => a.name === addon.name);
+    if (!entry) continue; // Skip if not installed
+    try {
+      console.log(`[AddonUpdate] Checking addon: ${addon.name}`);
+      const latestHash = await fetchLatestCommitHash(addon.repo);
+      console.log(`[AddonUpdate] Latest hash from GitHub for '${addon.name}': ${latestHash}`);
+      const entry = getAddonConfigEntry(config, addon);
+      if (!entry) {
+        console.log(`[AddonUpdate] '${addon.name}' not installed. Installing...`);
+      } else if (entry.hash !== latestHash) {
+        console.log(`[AddonUpdate] Hash mismatch for '${addon.name}': config=${entry.hash}, github=${latestHash}`);
+      } else {
+        console.log(`[AddonUpdate] '${addon.name}' is up to date.`);
+      }
+      if (!entry || entry.hash !== latestHash) {
+        // Not installed or hash mismatch: always uninstall and re-install
+        try {
+          console.log(`[AddonUpdate] Uninstalling '${addon.name}' if present...`);
+          uninstallAddon(addon, clientDir);
+        } catch (err) {
+          console.log(`[AddonUpdate] Error uninstalling '${addon.name}': ${err.message}`);
+        }
+        try {
+          console.log(`[AddonUpdate] Downloading and extracting '${addon.name}'...`);
+          await downloadAndExtractAddon(addon, clientDir);
+          const now = new Date().toISOString();
+          saveAddonConfig(config, addon, latestHash, now);
+          console.log(`[AddonUpdate] Successfully installed '${addon.name}'. Updated config hash to ${latestHash}`);
+        } catch (err) {
+          console.log(`[AddonUpdate] Failed to install '${addon.name}': ${err.message}`);
+          handleAddonError(err, addon);
+          // Do NOT update config if install fails
+        }
+      }
+    } catch (err) {
+      console.log(`[AddonUpdate] Error processing '${addon.name}': ${err.message}`);
+      handleAddonError(err, addon);
+    }
+  }
+}
+
+/** Logs error and triggers modal dialog (to be called from renderer via ipc) */
+function handleAddonError(err, addon) {
+  // Log to file or console
+  console.error('Addon error:', addon ? addon.name : '', err);
+  // In renderer, show modal dialog with error (handled via ipc)
+}
+
 module.exports = {
   configExists,
   ensureConfigDir,
@@ -113,5 +415,16 @@ module.exports = {
   isValidWoWDir,
   extractClient,
   setRealmlist,
-  extractPatchVersion
+  extractPatchVersion,
+  // Addons system
+  getInstalledAddons,
+  isAddonInstalled,
+  getAddonConfigEntry,
+  saveAddonConfig,
+  removeAddonConfig,
+  fetchLatestCommitHash,
+  downloadAndExtractAddon,
+  uninstallAddon,
+  autoUpdateAddons,
+  handleAddonError
 };

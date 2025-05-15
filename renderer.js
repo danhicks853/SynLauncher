@@ -291,7 +291,227 @@ function showPlayButton(clientDir) {
   addonsBtn.style.fontSize = '1rem';
   addonsBtn.style.width = '180px';
   addonsBtn.style.height = '38px';
-  addonsBtn.style.margin = '18px auto 0 auto';
+  addonsBtn.style.marginTop = '16px';
+  addonsBtn.style.background = '#283046';
+  addonsBtn.style.color = '#fff';
+  addonsBtn.style.border = 'none';
+  addonsBtn.style.borderRadius = '5px';
+  addonsBtn.style.cursor = 'pointer';
+  addonsBtn.style.boxShadow = '0 2px 8px rgba(80,80,80,0.08)';
+  addonsBtn.style['-webkit-app-region'] = 'no-drag';
+  addonsBtn.onmouseover = () => addonsBtn.style.background = '#1a1d21';
+  addonsBtn.onmouseleave = () => addonsBtn.style.background = '#283046';
+
+  let addonsPanel = null;
+  addonsBtn.onclick = async () => {
+    if (addonsPanel && addonsPanel.parentNode) {
+      // Instead of removing the panel, just refresh its contents
+      // Remove all children except for the panel container itself
+      while (addonsPanel.firstChild) {
+        addonsPanel.removeChild(addonsPanel.firstChild);
+      }
+      // Continue to repopulate the panel below (do not return)
+    }
+    // Remove any existing panel
+    if (addonsPanel) addonsPanel.remove();
+    addonsPanel = document.createElement('div');
+    addonsPanel.style.position = 'fixed';
+    addonsPanel.style.top = '0';
+    addonsPanel.style.left = '0';
+    addonsPanel.style.width = '100vw';
+    addonsPanel.style.height = '100vh';
+    addonsPanel.style.maxWidth = '100vw';
+    addonsPanel.style.maxHeight = '100vh';
+    addonsPanel.style.overflowY = 'auto';
+    addonsPanel.style.margin = '0';
+    addonsPanel.style.paddingTop = '60px'; // leave a little space for header
+    addonsPanel.style.boxSizing = 'border-box';
+    // Modern custom scrollbar for the addons panel
+    const addonsScrollbarStyle = document.createElement('style');
+    addonsScrollbarStyle.textContent = `
+      .synastria-addons-panel::-webkit-scrollbar {
+        width: 12px;
+        background: #23272e;
+        border-radius: 8px;
+      }
+      .synastria-addons-panel::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #38415a 0%, #23272e 100%);
+        border-radius: 8px;
+        border: 2px solid #23272e;
+      }
+      .synastria-addons-panel::-webkit-scrollbar-thumb:hover {
+        background: #4e5a7a;
+      }
+    `;
+    document.head.appendChild(addonsScrollbarStyle);
+    addonsPanel.classList.add('synastria-addons-panel');
+    addonsPanel.style.background = 'rgba(30,36,48,0.97)';
+    addonsPanel.style.borderRadius = '12px';
+    addonsPanel.style.boxShadow = '0 8px 32px 0 rgba(0,0,0,0.23)';
+    addonsPanel.style.padding = '24px 18px 18px 18px';
+    addonsPanel.style.zIndex = '20001';
+    addonsPanel.style.display = 'flex';
+    addonsPanel.style.flexDirection = 'column';
+    addonsPanel.style.gap = '0px';
+
+    // Addons panel header
+    const header = document.createElement('div');
+    header.textContent = 'Manage Addons';
+    header.style.fontSize = '1.3rem';
+    header.style.fontWeight = '600';
+    header.style.color = '#fff';
+    header.style.marginBottom = '18px';
+    header.style.letterSpacing = '0.5px';
+    addonsPanel.appendChild(header);
+
+    // Fetch list
+    const res = await ipcRenderer.invoke('get-addons-list');
+    if (!res.success) {
+      showModal('Failed to load addons: ' + res.message);
+      return;
+    }
+    const addons = res.addons;
+    // Zebra-striped list
+    addons.forEach((addon, idx) => {
+      const row = document.createElement('div');
+      row.style.background = idx % 2 === 0 ? 'rgba(40,44,60,0.92)' : 'rgba(32,36,48,0.87)';
+      row.style.display = 'flex';
+      row.style.flexDirection = 'row';
+      row.style.alignItems = 'center';
+      row.style.padding = '4px 10px'; // reduced top-bottom padding
+      row.style.borderRadius = '7px';
+      row.style.marginBottom = '2px';
+      row.style.fontFamily = 'Montserrat, Arial, sans-serif';
+      row.style.fontSize = '0.95rem'; // globally smaller font
+      row.style.transition = 'background 0.13s';
+
+      // Name
+      const name = document.createElement('div');
+      name.textContent = addon.name;
+      name.style.fontWeight = '600';
+      name.style.fontSize = '0.99rem';
+      name.style.marginRight = '14px';
+      name.style.color = '#fff';
+      name.style.flex = '0 0 180px';
+      name.style.marginRight = '18px';
+      row.appendChild(name);
+
+      // Description
+      const desc = document.createElement('div');
+      desc.textContent = addon.description;
+      desc.style.fontSize = '0.93rem';
+      desc.style.color = '#b6c1dc';
+      desc.style.flex = '1 1 auto';
+      desc.style.marginRight = '14px';
+      row.appendChild(desc);
+
+      // Last updated
+      const lastUpdated = document.createElement('div');
+      lastUpdated.textContent = addon.lastUpdated ? `Updated: ${new Date(addon.lastUpdated).toLocaleDateString()}` : 'Not installed';
+      lastUpdated.style.fontSize = '0.92rem';
+      lastUpdated.style.color = addon.installed ? '#5ad17a' : '#c5c5c5';
+      lastUpdated.style.marginRight = '14px';
+      lastUpdated.style.flex = '0 0 120px';
+      lastUpdated.style.textAlign = 'right';
+      row.appendChild(lastUpdated);
+
+      // Actions (Install/Uninstall)
+      const actions = document.createElement('div');
+      actions.style.display = 'flex';
+      actions.style.flexDirection = 'row';
+      actions.style.alignItems = 'center';
+      actions.style.gap = '10px';
+      actions.style.flex = '0 0 auto';
+
+      // Install/Uninstall/Update buttons
+      if (!addon.installed) {
+        const installBtn = document.createElement('button');
+        installBtn.textContent = 'Install';
+        installBtn.style.background = '#17406d';
+        installBtn.style['-webkit-app-region'] = 'no-drag';
+        installBtn.style.color = '#fff';
+        installBtn.style.border = 'none';
+        installBtn.style.borderRadius = '4px';
+        installBtn.style.padding = '6px 18px';
+        installBtn.style.fontSize = '1rem';
+        installBtn.style.cursor = 'pointer';
+        installBtn.onmouseover = () => installBtn.style.background = '#0d2238';
+        installBtn.onmouseleave = () => installBtn.style.background = '#17406d';
+        installBtn.onclick = async (e) => {
+          e.stopPropagation();
+          actions.style.opacity = '0.6';
+          installBtn.disabled = true;
+          const resp = await ipcRenderer.invoke('install-addon', addon, clientDir);
+          actions.style.opacity = '';
+          installBtn.disabled = false;
+          if (!resp.success) {
+            showModal('Install failed: ' + resp.message);
+          } else {
+            // Refresh the panel in place
+            addonsBtn.onclick();
+          }
+        };
+        actions.appendChild(installBtn);
+      } else {
+        // Only show uninstall button now that auto-update is always handled
+        const uninstallBtn = document.createElement('button');
+        uninstallBtn.textContent = 'Uninstall';
+        uninstallBtn.style.background = '#a62828';
+        uninstallBtn.style['-webkit-app-region'] = 'no-drag';
+        uninstallBtn.style.color = '#fff';
+        uninstallBtn.style.border = 'none';
+        uninstallBtn.style.borderRadius = '4px';
+        uninstallBtn.style.padding = '6px 18px';
+        uninstallBtn.style.fontSize = '1rem';
+        uninstallBtn.style.cursor = 'pointer';
+        uninstallBtn.onmouseover = () => uninstallBtn.style.background = '#6d1717';
+        uninstallBtn.onmouseleave = () => uninstallBtn.style.background = '#a62828';
+        uninstallBtn.onclick = async (e) => {
+          e.stopPropagation();
+          actions.style.opacity = '0.6';
+          uninstallBtn.disabled = true;
+          const resp = await ipcRenderer.invoke('uninstall-addon', addon, clientDir);
+          actions.style.opacity = '';
+          uninstallBtn.disabled = false;
+          if (!resp.success) {
+            showModal('Uninstall failed: ' + resp.message);
+          } else {
+            // Refresh the panel in place
+            addonsBtn.onclick();
+          }
+        };
+        actions.appendChild(uninstallBtn);
+      }
+
+      row.appendChild(actions);
+      addonsPanel.appendChild(row);
+    });
+
+    // Close button
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Close';
+    closeBtn.style.background = '#23272e';
+    closeBtn.style['-webkit-app-region'] = 'no-drag';
+    closeBtn.style.margin = '18px auto 0 auto';
+    closeBtn.style.display = 'block';
+    closeBtn.style.color = '#fff';
+    closeBtn.style.border = 'none';
+    closeBtn.style.borderRadius = '4px';
+    closeBtn.style.padding = '8px 38px';
+    closeBtn.style.fontSize = '1.08rem';
+    closeBtn.style.cursor = 'pointer';
+    closeBtn.onmouseover = () => closeBtn.style.background = '#111';
+    closeBtn.onmouseleave = () => closeBtn.style.background = '#222';
+    closeBtn.onclick = () => {
+      addonsPanel.remove();
+      addonsPanel = null;
+    };
+    addonsPanel.appendChild(closeBtn);
+
+    document.body.appendChild(addonsPanel);
+  };
+  document.body.appendChild(addonsBtn);
+sBtn.style.margin = '18px auto 0 auto';
   addonsBtn.style.display = 'block';
   addonsBtn.style.background = '#23272e';
   addonsBtn.style.color = '#fff';
@@ -317,6 +537,10 @@ function showPlayButton(clientDir) {
   const chooseExistingBtn = document.getElementById('chooseExistingBtn');
   const downloadClientBtn = document.getElementById('downloadClientBtn');
   const cancelDownloadBtn = document.getElementById('cancelDownloadBtn');
+
+  // Ensure these buttons ignore drag (no-drag region)
+  chooseExistingBtn.style['-webkit-app-region'] = 'no-drag';
+  downloadClientBtn.style['-webkit-app-region'] = 'no-drag';
 
   const configExists = await ipcRenderer.invoke('check-config');
   const constants = await ipcRenderer.invoke('get-constants');
@@ -348,23 +572,26 @@ function showPlayButton(clientDir) {
       // Reload config after update
       config = await ipcRenderer.invoke('load-config');
     }
-    // If client is installed and wowext.exe exists, show Play button right away
-    if (config && config.installed && config.clientDir) {
-      const fs = require('fs');
-      const path = require('path');
-      const wowExtExe = path.join(config.clientDir, 'wowext.exe');
-      if (fs.existsSync(wowExtExe)) {
-        showPlayButton(config.clientDir);
-        return;
-      }
-    }
+    // If client is installed and clientDir is set, proceed to validate and update addons
     if (config && config.clientDir) {
       const isValid = await ipcRenderer.invoke('validate-wow-dir', config.clientDir);
       if (isValid) {
-        showStatus('WoW client detected. Ready to launch Synastria!');
-        hideProgress();
-        mainActions.style.display = 'none';
-        clientDetected = true;
+        showStatus('WoW client detected. Checking for addon updates...');
+        await ipcRenderer.invoke('auto-update-addons', config.clientDir);
+        // Reload config to get updated hash and state
+        config = await ipcRenderer.invoke('load-config');
+        // Now check for wowext.exe and show play button if present
+        const fs = require('fs');
+        const path = require('path');
+        const wowExtExe = path.join(config.clientDir, 'wowext.exe');
+        if (fs.existsSync(wowExtExe)) {
+          showStatus('WoW client detected. Ready to launch Synastria!');
+          hideProgress();
+          mainActions.style.display = 'none';
+          clientDetected = true;
+          showPlayButton(config.clientDir);
+          return;
+        }
       }
     }
   }
