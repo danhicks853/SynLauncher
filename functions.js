@@ -159,6 +159,10 @@ async function fetchLatestCommitHash(repo) {
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
         try {
+          // Debug: print the raw API response for this repo
+          if (repo && repo.includes('danhicks853/slg')) {
+            console.log('GitHub API response for Synastria Loot Guide:', data);
+          }
           const commits = JSON.parse(data);
           if (Array.isArray(commits) && commits.length > 0) {
             resolve(commits[0].sha);

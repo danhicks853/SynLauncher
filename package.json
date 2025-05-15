@@ -4,7 +4,8 @@
   "main": "main.js",
   "description": "Simple Electron launcher for Synastria WoW",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-win": "electron-packager . SynastriaLauncher --platform=win32 --arch=x64 --out=release-build --overwrite"
   },
   "dependencies": {
     "adm-zip": "^0.5.16",
@@ -14,5 +15,9 @@
     "extract-zip": "^2.0.1",
     "webtorrent": "^1.9.7",
     "yauzl": "^2.10.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^17.1.2"
   }
+  
 }
