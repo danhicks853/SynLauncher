@@ -81,23 +81,6 @@ function extractClient(zipPath, destPath) {
   });
 }
 
-function setRealmlist(clientDir) {
-  const fs = require('fs');
-  const path = require('path');
-  const realmlistPath = path.join(clientDir, 'Data', 'enUS', 'realmlist.wtf');
-  try {
-    if (fs.existsSync(realmlistPath)) {
-      const stat = fs.statSync(realmlistPath);
-      if (!(stat.mode & 0o200)) { // not writable
-        fs.chmodSync(realmlistPath, 0o666); // make writable
-      }
-    }
-    fs.writeFileSync(realmlistPath, 'set realmlist game.synastria.org', { encoding: 'utf8' });
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
 
 function extractPatchVersion(filename) {
   const match = /WoWExt_v(\d+)\.zip/i.exec(filename);
@@ -418,7 +401,6 @@ module.exports = {
   downloadClientTorrent,
   isValidWoWDir,
   extractClient,
-  setRealmlist,
   extractPatchVersion,
   // Addons system
   getInstalledAddons,

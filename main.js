@@ -49,10 +49,19 @@ ipcMain.handle('load-config', () => {
 // Addons IPC Handlers
 // =============================
 
+const axios = require('axios');
+
 ipcMain.handle('get-addons-list', async (event) => {
   try {
     const config = functions.loadConfig() || {};
-    const curated = constants.ADDONS;
+    let curated = [];
+    try {
+      const resp = await axios.get(constants.ADDONS_LIST_URL);
+      curated = Array.isArray(resp.data) ? resp.data : [];
+    } catch (fetchErr) {
+      console.error('Failed to fetch curated addons list:', fetchErr);
+      return { success: false, message: 'Could not fetch curated addons list.' };
+    }
     const installed = functions.getInstalledAddons(config);
     // Map curated list with install state
     const list = curated.map(addon => {
@@ -125,7 +134,14 @@ ipcMain.handle('get-addon-hash', async (event, addon) => {
 ipcMain.handle('auto-update-addons', async (event, clientDir) => {
   try {
     const config = functions.loadConfig() || {};
-    const curated = constants.ADDONS;
+    let curated = [];
+    try {
+      const resp = await axios.get(constants.ADDONS_LIST_URL);
+      curated = Array.isArray(resp.data) ? resp.data : [];
+    } catch (fetchErr) {
+      console.error('Failed to fetch curated addons list:', fetchErr);
+      return { success: false, message: 'Could not fetch curated addons list.' };
+    }
     await functions.autoUpdateAddons(config, clientDir, curated);
     functions.saveConfig(config);
     return { success: true };
