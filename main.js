@@ -82,6 +82,7 @@ ipcMain.handle('check-for-launcher-update', async () => {
 // --- End unsigned update check logic ---
 
 // IPC handler to download and run the installer, then quit
+const yaml = require('js-yaml');
 ipcMain.handle('download-launcher-update', async (event, downloadUrl) => {
   try {
     // Prompt for save location
@@ -91,12 +92,30 @@ ipcMain.handle('download-launcher-update', async (event, downloadUrl) => {
       filters: [ { name: 'Executable', extensions: ['exe'] } ]
     });
     if (canceled || !filePath) throw new Error('User cancelled download');
-    // Download the file
+    let exeUrl = downloadUrl;
+    // If the URL is latest.yml or ends with .yml, fetch and parse it to get the .exe URL
+    if (exeUrl.endsWith('.yml')) {
+      const ymlResp = await axios.get(exeUrl);
+      const latest = yaml.load(ymlResp.data);
+      // Prefer 'path' if present, else first file url
+      const exeFileName = latest.path || (latest.files && latest.files[0] && latest.files[0].url);
+      if (!exeFileName) throw new Error('Could not determine installer filename from latest.yml');
+      // Compose the direct download URL for the .exe asset
+      const baseUrl = exeUrl.replace(/\/latest\.yml$/, '/');
+      exeUrl = baseUrl + exeFileName;
+    }
+    // Download the installer file
     const resp = await axios({
-      url: downloadUrl,
+      url: exeUrl,
       method: 'GET',
-      responseType: 'stream'
+      responseType: 'stream',
+      maxRedirects: 5
     });
+    // Check for HTML or YAML response (error case)
+    const ctype = resp.headers['content-type'] || '';
+    if (ctype.includes('text/html') || ctype.includes('yaml') || ctype.includes('yml')) {
+      throw new Error('Download failed: received HTML/YAML instead of EXE. Check the installer URL.');
+    }
     const fs = require('fs');
     const writer = fs.createWriteStream(filePath);
     await new Promise((resolve, reject) => {
