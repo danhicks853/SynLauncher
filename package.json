@@ -1,13 +1,24 @@
 {
   "name": "synastria-launcher",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "main": "main.js",
   "description": "Simple Electron launcher for Synastria WoW",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder",
-    "package-win": "electron-packager . SynastriaLauncher --platform=win32 --arch=x64 --out=release-build --overwrite"
+    "package-win": "electron-packager . SynastriaLauncher --platform=win32 --arch=x64 --out=release-build --overwrite",
+    "publish": "electron-builder --publish always"
   },
+  "build": {
+  "appId": "com.synastria.synastrialauncher",
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "danhicks853",
+      "repo": "SynLauncher"
+    }
+  ]
+},
   "dependencies": {
     "adm-zip": "^0.5.16",
     "axios": "^1.9.0",
