@@ -1,5 +1,6 @@
 const { ipcRenderer, remote } = require('electron');
 const { downloadClientTorrent } = require('./functions');
+const { PATCH_NOTES_URL } = require('./constants');
 
 // Patch notes HTML block for easy editing
 const PATCH_NOTES_HTML = `
@@ -264,7 +265,7 @@ function showPlayButton(clientDir) {
       patchNotes.innerHTML = html;
     })
     .catch(err => {
-      patchNotes.innerHTML = '<b>Failed to load patch notes.</b>';
+      patchNotes.innerHTML = ('<b>Failed to load patch notes.</b>' + err);
       console.error('Failed to fetch patch notes:', err);
     });
   document.body.appendChild(patchNotes);
