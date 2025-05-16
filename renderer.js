@@ -410,8 +410,14 @@ function showPlayButton(clientDir) {
       row.appendChild(desc);
 
       // Last updated
+      // Helper for formatting dates as 'Apr 1 2025'
+      function formatAddonDate(dateString) {
+        const date = new Date(dateString);
+        const month = date.toLocaleString('en-US', { month: 'short' });
+        return `${month} ${date.getDate()} ${date.getFullYear()}`;
+      }
       const lastUpdated = document.createElement('div');
-      lastUpdated.textContent = addon.lastUpdated ? `Updated: ${new Date(addon.lastUpdated).toLocaleDateString()}` : 'Not installed';
+      lastUpdated.textContent = addon.lastUpdated ? `Updated: ${formatAddonDate(addon.lastUpdated)}` : 'Not installed';
       lastUpdated.style.fontSize = '0.92rem';
       lastUpdated.style.color = addon.installed ? '#5ad17a' : '#c5c5c5';
       lastUpdated.style.marginRight = '14px';
