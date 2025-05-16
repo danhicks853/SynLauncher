@@ -417,7 +417,7 @@ function showPlayButton(clientDir) {
         return `${month} ${date.getDate()} ${date.getFullYear()}`;
       }
       const lastUpdated = document.createElement('div');
-      lastUpdated.textContent = addon.lastUpdated ? `Updated: ${formatAddonDate(addon.lastUpdated)}` : 'Not installed';
+      lastUpdated.innerHTML = addon.lastUpdated ? `Updated:<br>${formatAddonDate(addon.lastUpdated)}` : 'Not installed';
       lastUpdated.style.fontSize = '0.92rem';
       lastUpdated.style.color = addon.installed ? '#5ad17a' : '#c5c5c5';
       lastUpdated.style.marginRight = '14px';
