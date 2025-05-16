@@ -3,13 +3,17 @@ const { downloadClientTorrent } = require('./functions');
 
 // Patch notes HTML block for easy editing
 const PATCH_NOTES_HTML = `
-<h2 style='margin-top:0;'>Latest Patch Notes</h2>
-<p><strong>12/05/2025</strong></p>
+<h2>Patch Notes - 16/05/2025</h2>
+<h3>New client patch: v38</h3>
 <ul>
-  <li>You can now change your equipment while in combat.</li>
-  <li>Starting to delete very old characters to free up database space. Anyone who logged in at least once in the last 6 months is not affected by this.</li>
-  <li>Fixed some bugs with the way the prestige loot bonus thing worked in mythic dungeons.</li>
-  <li>Fixed bug where Amanitar from Ahn'Kahet was still immune to nature damage.</li>
+  <li>Fixed bug where <strong>Cheer: Swiftness</strong> was always only copying rank 1 versions of the pet abilities, and this also caused some other pet aspects to not consider those as pet abilities.</li>
+  <li>Quests that require items that go in resource bank can now be completed directly from the resource bank without having to withdraw them.</li>
+  <li>Fixed bug where combo points didn't show up for dual class characters.</li>
+  <li>You can equip bind-on-equip items in combat.</li>
+  <li>Realmlist is now automatically set when starting from WoWExt (without modifying the actual realmlist file).</li>
+  <li>Mark of Ruin is no longer considered a DoT if Sealed Fate perk is taken. This allows it to work with Beacon of Darkness.</li>
+  <li>Annoy-o-Tron is now a spell.</li>
+  <li>WotLK mythics now give more attune XP than TBC mythics.</li>
 </ul>
 `;
 

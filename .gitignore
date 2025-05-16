@@ -1,3 +1,4 @@
 # Ignore node_modules in SynLauncher
 /node_modules/
 /release-build/
+/dist
