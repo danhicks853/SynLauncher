@@ -256,7 +256,17 @@ function showPlayButton(clientDir) {
   patchNotes.className = 'patch-notes';
   patchNotes.style.zIndex = '1';
   patchNotes.style['-webkit-app-region'] = 'no-drag';
-  patchNotes.innerHTML = PATCH_NOTES_HTML;
+  // patchNotes.innerHTML = PATCH_NOTES_HTML;
+  // Dynamically fetch patch notes from remote URL
+  fetch(PATCH_NOTES_URL)
+    .then(response => response.text())
+    .then(html => {
+      patchNotes.innerHTML = html;
+    })
+    .catch(err => {
+      patchNotes.innerHTML = '<b>Failed to load patch notes.</b>';
+      console.error('Failed to fetch patch notes:', err);
+    });
   document.body.appendChild(patchNotes);
 
   // Play button

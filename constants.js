@@ -80,6 +80,9 @@ const ADDONS = [
 const path = require('path');
 const os = require('os');
 
+const PATCH_NOTES_URL = "https://raw.githubusercontent.com/danhicks853/SynLauncher/refs/heads/main/patch_notes.html";
+const ADDONS_LIST_URL = "https://raw.githubusercontent.com/danhicks853/SynLauncher/refs/heads/main/addons_list.json";
+
 module.exports = {
   ADDONS,
   CONFIG_DIR: path.join(process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming'), 'Synastria'),
