@@ -1,3 +1,6 @@
+## v1.1.4
+- Additional fixes for auto-update
+
 ## v1.1.3
 - Added release notes to automated release workflow
 
