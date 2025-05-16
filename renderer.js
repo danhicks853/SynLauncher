@@ -74,6 +74,32 @@ function showModal(message) {
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
+  // Check for launcher updates
+  try {
+    const updateInfo = await ipcRenderer.invoke('check-for-launcher-update');
+    if (updateInfo && updateInfo.updateAvailable) {
+      let msg = `A new version of the Synastria Launcher is available!\n\n`;
+      msg += `Latest version: v${updateInfo.latestVersion}\n`;
+      msg += `Release: ${updateInfo.releaseName || ''}\n\n`;
+      if (updateInfo.body) {
+        msg += `${updateInfo.body.substring(0, 350)}\n\n`;
+      }
+      msg += `Would you like to download it now?`;
+      const confirmed = await (typeof showModal === 'function'
+        ? showModal(msg)
+        : Promise.resolve(window.confirm(msg)));
+      if (confirmed) {
+        try {
+          await ipcRenderer.invoke('download-launcher-update', updateInfo.downloadUrl);
+          alert('Installer is downloading. The launcher will close when the installer starts.');
+        } catch (err) {
+          alert('Failed to start download: ' + (err && err.message ? err.message : err));
+        }
+      }
+    }
+  } catch (err) {
+    // Optionally log or ignore update check errors
+  }
   // Make body draggable except for controls
   document.body.style['-webkit-app-region'] = 'drag';
 

@@ -1,7 +1,8 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const functions = require('./functions');
 const constants = require('./constants');
+const axios = require('axios');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -37,6 +38,89 @@ ipcMain.handle('save-config', (event, config) => {
   return true;
 });
 
+// --- Unsigned update check logic ---
+ipcMain.handle('check-for-launcher-update', async () => {
+  try {
+    const repoOwner = 'danhicks853';
+    const repoName = 'SynLauncher';
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
+    const resp = await axios.get(apiUrl, {
+      headers: {
+        'User-Agent': 'SynastriaLauncher',
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    const latest = resp.data;
+    const latestVersion = latest.tag_name.startsWith('v') ? latest.tag_name.substring(1) : latest.tag_name;
+    const currentVersion = app.getVersion();
+    // Simple semver compare (major.minor.patch)
+    function isNewer(verA, verB) {
+      const a = verA.split('.').map(Number);
+      const b = verB.split('.').map(Number);
+      for (let i = 0; i < Math.max(a.length, b.length); i++) {
+        if ((a[i] || 0) > (b[i] || 0)) return true;
+        if ((a[i] || 0) < (b[i] || 0)) return false;
+      }
+      return false;
+    }
+    if (isNewer(latestVersion, currentVersion)) {
+      return {
+        updateAvailable: true,
+        latestVersion,
+        releaseName: latest.name,
+        htmlUrl: latest.html_url,
+        downloadUrl: latest.assets && latest.assets.length > 0 ? latest.assets[0].browser_download_url : latest.html_url,
+        body: latest.body
+      };
+    } else {
+      return { updateAvailable: false };
+    }
+  } catch (err) {
+    return { updateAvailable: false, error: err.message };
+  }
+});
+// --- End unsigned update check logic ---
+
+// IPC handler to download and run the installer, then quit
+ipcMain.handle('download-launcher-update', async (event, downloadUrl) => {
+  try {
+    // Prompt for save location
+    const { canceled, filePath } = await dialog.showSaveDialog({
+      title: 'Save Launcher Installer',
+      defaultPath: 'SynastriaLauncher-Setup.exe',
+      filters: [ { name: 'Executable', extensions: ['exe'] } ]
+    });
+    if (canceled || !filePath) throw new Error('User cancelled download');
+    // Download the file
+    const resp = await axios({
+      url: downloadUrl,
+      method: 'GET',
+      responseType: 'stream'
+    });
+    const fs = require('fs');
+    const writer = fs.createWriteStream(filePath);
+    await new Promise((resolve, reject) => {
+      resp.data.pipe(writer);
+      let error = null;
+      writer.on('error', err => {
+        error = err;
+        writer.close();
+        reject(err);
+      });
+      writer.on('close', () => {
+        if (!error) resolve();
+      });
+    });
+    // Launch the installer
+    await shell.openPath(filePath);
+    // Quit the app
+    app.quit();
+    return { success: true };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+});
+
 ipcMain.handle('get-constants', () => {
   return constants;
 });
@@ -49,7 +133,6 @@ ipcMain.handle('load-config', () => {
 // Addons IPC Handlers
 // =============================
 
-const axios = require('axios');
 
 ipcMain.handle('get-addons-list', async (event) => {
   try {
