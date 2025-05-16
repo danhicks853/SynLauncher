@@ -2,22 +2,6 @@ const { ipcRenderer, remote } = require('electron');
 const { downloadClientTorrent } = require('./functions');
 const { PATCH_NOTES_URL } = require('./constants');
 
-// Patch notes HTML block for easy editing
-const PATCH_NOTES_HTML = `
-<h2>Patch Notes - 16/05/2025</h2>
-<h3>New client patch: v38</h3>
-<ul>
-  <li>Fixed bug where <strong>Cheer: Swiftness</strong> was always only copying rank 1 versions of the pet abilities, and this also caused some other pet aspects to not consider those as pet abilities.</li>
-  <li>Quests that require items that go in resource bank can now be completed directly from the resource bank without having to withdraw them.</li>
-  <li>Fixed bug where combo points didn't show up for dual class characters.</li>
-  <li>You can equip bind-on-equip items in combat.</li>
-  <li>Realmlist is now automatically set when starting from WoWExt (without modifying the actual realmlist file).</li>
-  <li>Mark of Ruin is no longer considered a DoT if Sealed Fate perk is taken. This allows it to work with Beacon of Darkness.</li>
-  <li>Annoy-o-Tron is now a spell.</li>
-  <li>WotLK mythics now give more attune XP than TBC mythics.</li>
-</ul>
-`;
-
 // Simple modal dialog for confirmations
 function showModal(message) {
   return new Promise((resolve) => {
@@ -689,15 +673,7 @@ sBtn.style.margin = '18px auto 0 auto';
           extractClient(zipPath, destDir)
             .then(async () => {
               extractingInProgress = false;
-              const { setRealmlist } = require('./functions');
-              const ok = setRealmlist(destDir);
-              if (!ok) {
-                showStatus('Extraction complete, but failed to set realmlist! Please check permissions.');
-                hideProgress();
-                currentClient = null;
-                return;
-              }
-              showStatus('Extraction complete! Realmlist set. Downloading patch...');
+              showStatus('Extraction complete! Downloading patch...');
               try {
                 const result = await ipcRenderer.invoke('download-and-install-patch', destDir);
                 console.log('Patch download result:', result);
