@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Scoots' Stats",
+    "folder": "ScootsStats",
+    "repo": "https://github.com/SynScoots/ScootsStats.git",
+    "description": "This adds a stat panel to the right of your character panel"
+  },
+  {
+    "name": "ArkInventory (Attunements)",
+    "folder": "ArkInventory",
+    "repo": "https://github.com/SynScoots/ArkInventory-modified-for-attunements-.git",
+    "description": "This is a modified ArkInventory that adds support for attunements."
+  },
+  {
+    "name": "Scoots' Combat Attune Watch",
+    "folder": "ScootsCombatAttuneWatch",
+    "repo": "https://github.com/SynScoots/ScootsCombatAttuneWatch.git",
+    "description": "Tracks attunement progress in combat."
+  },
+  {
+    "name": "Scoots' Confirmation Skip",
+    "folder": "ScootsConfirmationSkip",
+    "repo": "https://github.com/SynScoots/ScootsConfirmationSkip.git",
+    "description": "Skips confirmation dialogue for equipping BoE and looting BoP items."
+  },
+  {
+    "name": "Scoots' Quick Auction",
+    "folder": "ScootsQuickAuction",
+    "repo": "https://github.com/SynScoots/ScootsQuickAuction.git",
+    "description": "Rapidly create auctions at a specified price."
+  },
+  {
+    "name": "Scoots' Rares",
+    "folder": "ScootsRares",
+    "repo": "https://github.com/SynScoots/ScootsRares.git",
+    "description": "Creates a chat link to automatically run .findnpc command when near a rare."
+  },
+  {
+    "name": "Scoots' Speedrun",
+    "folder": "ScootsSpeedrun",
+    "repo": "https://github.com/SynScoots/ScootsSpeedrun.git",
+    "description": "Instantly selects dialogue choices in dungeons."
+  },
+  {
+    "name": "Scoots' Tokens",
+    "folder": "ScootsTokens",
+    "repo": "https://github.com/SynScoots/ScootsTokens.git",
+    "description": "Adds token tracking functionality."
+  },
+  {
+    "name": "Scoots' Unresponsive UI Patch",
+    "folder": "ScootsUnresponsiveUIPatch",
+    "repo": "https://github.com/SynScoots/ScootsUnresponsiveUIPatch.git",
+    "description": "Fixes issues with unresponsive UI elements."
+  },
+  {
+    "name": "Scoots' Vendor Filter",
+    "folder": "ScootsVendorFilter",
+    "repo": "https://github.com/SynScoots/ScootsVendorFilter.git",
+    "description": "Converts vendor panels from paginated icons into a scrollable list."
+  },
+  {
+    "name": "AtlasLoot Mythic",
+    "folder": "AtlasLoot_Mythic",
+    "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
+    "description": "Adds mythic items to AtlasLoot."
+  },
+  {
+    "name": "Synastria Loot Guide",
+    "folder": "SLG",
+    "repo": "https://github.com/danhicks853/slg.git",
+    "description": "A dynamic loot attunement tracker that updates as you play."
+  }
+]
