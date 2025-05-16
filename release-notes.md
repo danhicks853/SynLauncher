@@ -1,4 +1,9 @@
-# Synastria Launcher Release Notes
+## v1.1.3
+- Added release notes to automated release workflow
+
+## v1.1.2
+- Added release notes to automated release workflow
+
 ## v1.1.1
 - Added release notes to automated release workflow
 
