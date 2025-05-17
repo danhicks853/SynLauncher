@@ -64,11 +64,5 @@
     "folder": "AtlasLoot_Mythic",
     "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
     "description": "Adds mythic items to AtlasLoot."
-  },
-  {
-    "name": "Synastria Loot Guide",
-    "folder": "SLG",
-    "repo": "https://github.com/danhicks853/slg.git",
-    "description": "A dynamic loot attunement tracker that updates as you play."
   }
 ]
