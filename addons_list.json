@@ -6,6 +6,12 @@
     "description": "This adds a stat panel to the right of your character panel"
   },
   {
+    "name": "Scoots' Craft",
+    "folder": "ScootsCraft",
+    "repo": "https://github.com/SynScoots/ScootsCraft.git",
+    "description": "A complete overhaul of the profession UI, tailored to Synastria"
+  },
+  {
     "name": "ArkInventory (Attunements)",
     "folder": "ArkInventory",
     "repo": "https://github.com/SynScoots/ArkInventory-modified-for-attunements-.git",
