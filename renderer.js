@@ -591,6 +591,8 @@ sBtn.style.margin = '18px auto 0 auto';
     progressBar.style.display = 'none';
     cancelDownloadBtn.style.display = 'none';
     progressBar.value = 0;
+    progressBar.classList.remove('indeterminate');
+    progressBar.removeAttribute('value');
   }
 
   let config = null;
@@ -696,33 +698,46 @@ sBtn.style.margin = '18px auto 0 auto';
           progressBar.value = 100;
           hideProgress();
           showStatus('Extraction in Progress...');
-          extractClient(zipPath, destDir)
-            .then(async () => {
-              extractingInProgress = false;
-              showStatus('Extraction complete! Downloading patch...');
-              try {
-                const result = await ipcRenderer.invoke('download-and-install-patch', destDir);
-                console.log('Patch download result:', result);
-                showStatus(result.message);
-                if (result.success) {
-                  showPlayButton(destDir);
-                }
-                if (result.success) {
-                  showPlayButton(destDir);
-                }
-              } catch (err) {
-                showStatus('Error downloading patch: ' + err.message);
-              }
-              await ipcRenderer.invoke('save-config', { installed: true, clientDir: destDir });
-              hideProgress();
-              currentClient = null;
+          // Show indeterminate progress bar
+          progressBar.classList.add('indeterminate');
+          progressBar.removeAttribute('value');
+          showProgress();
+          setTimeout(() => {
+            extractClient(zipPath, destDir, (movePercent) => {
+              // Switch to determinate mode during file moves
+              progressBar.classList.remove('indeterminate');
+              progressBar.value = movePercent;
             })
-            .catch((err) => {
-              extractingInProgress = false;
-              showStatus('Extraction failed: ' + err.message);
-              hideProgress();
-              currentClient = null;
-            });
+              .then(async () => {
+                extractingInProgress = false;
+                showStatus('Extraction complete! Downloading patch...');
+                try {
+                  const result = await ipcRenderer.invoke('download-and-install-patch', destDir);
+                  console.log('Patch download result:', result);
+                  showStatus(result.message);
+                  if (result.success) {
+                    showPlayButton(destDir);
+                  }
+                } catch (err) {
+                  showStatus('Error downloading patch: ' + err.message);
+                }
+                let config = await ipcRenderer.invoke('load-config') || {};
+config.installed = true;
+config.clientDir = destDir;
+// patchVersion is preserved if already set by main.js after patching
+await ipcRenderer.invoke('save-config', config);
+                // Extraction and moves complete
+                progressBar.value = 100;
+                hideProgress();
+                currentClient = null;
+              })
+              .catch((err) => {
+                extractingInProgress = false;
+                showStatus('Extraction failed: ' + err.message);
+                hideProgress();
+                currentClient = null;
+              });
+          }, 0);
         }
       );
     }

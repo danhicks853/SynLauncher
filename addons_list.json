@@ -6,6 +6,12 @@
     "description": "This adds a stat panel to the right of your character panel"
   },
   {
+    "name": "Attune Helper",
+    "folder": "AttuneHelper",
+    "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
+    "description": "QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
+  },
+  {
     "name": "Scoots' Craft",
     "folder": "ScootsCraft",
     "repo": "https://github.com/SynScoots/ScootsCraft.git",

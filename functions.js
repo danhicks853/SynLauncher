@@ -47,38 +47,58 @@ function isValidWoWDir(dir) {
   );
 }
 
-function extractClient(zipPath, destPath) {
+/**
+ * Extracts the zip file and moves files up one level.
+ * @param {string} zipPath - Path to the zip file
+ * @param {string} destPath - Destination directory
+ * @param {function} [onMoveProgress] - Optional callback(percent: number) during file move phase
+ */
+async function extractClient(zipPath, destPath, onMoveProgress) {
   const path = require('path');
   const fs = require('fs');
+  const fsp = fs.promises;
   const constants = require('./constants');
   const extract = require('extract-zip');
 
-  return extract(zipPath, { dir: destPath }).then(() => {
-    // Determine the subfolder name (zip file name minus .zip)
-    const subfolder = path.join(destPath, constants.CLIENT_ZIP_FILE.replace(/\.zip$/i, ''));
-    if (!fs.existsSync(subfolder) || !fs.statSync(subfolder).isDirectory()) {
-      return;
+  await extract(zipPath, { dir: destPath });
+  // Determine the subfolder name (zip file name minus .zip)
+  const subfolder = path.join(destPath, constants.CLIENT_ZIP_FILE.replace(/\.zip$/i, ''));
+  try {
+    const stat = await fsp.stat(subfolder);
+    if (!stat.isDirectory()) return;
+  } catch (e) {
+    return; // subfolder doesn't exist
+  }
+  // Move all files/folders up one level
+  const names = await fsp.readdir(subfolder);
+  for (let i = 0; i < names.length; i++) {
+    const name = names[i];
+    const src = path.join(subfolder, name);
+    const dest = path.join(destPath, name);
+    await fsp.rename(src, dest);
+    if (typeof onMoveProgress === 'function') {
+      onMoveProgress(Math.round(((i + 1) / names.length) * 100));
     }
-    // Move all files/folders up one level
-    for (const name of fs.readdirSync(subfolder)) {
-      const src = path.join(subfolder, name);
-      const dest = path.join(destPath, name);
-      fs.renameSync(src, dest);
-    }
-    // Remove the now-empty subfolder
-    fs.rmdirSync(subfolder);
+  }
+  // Remove the now-empty subfolder
+  await fsp.rmdir(subfolder);
 
-    // Verify wow.exe or wowext.exe is present, then remove zip
-    const wowExe = path.join(destPath, 'wow.exe');
-    const wowExtExe = path.join(destPath, 'wowext.exe');
-    if (fs.existsSync(wowExe) || fs.existsSync(wowExtExe)) {
+  // Verify wow.exe or wowext.exe is present, then remove zip
+  const wowExe = path.join(destPath, 'wow.exe');
+  const wowExtExe = path.join(destPath, 'wowext.exe');
+  try {
+    const wowExists = await fsp.stat(wowExe).then(stat => stat.isFile()).catch(() => false);
+    const wowExtExists = await fsp.stat(wowExtExe).then(stat => stat.isFile()).catch(() => false);
+    if (wowExists || wowExtExists) {
       try {
-        fs.unlinkSync(zipPath);
+        await fsp.unlink(zipPath);
       } catch (err) {
         // Log or ignore error if unable to remove zip
       }
     }
-  });
+  } catch (err) {
+    // Ignore errors
+  }
 }
 
 
