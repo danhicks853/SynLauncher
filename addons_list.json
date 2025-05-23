@@ -1,5 +1,11 @@
 [
   {
+    "name": "SynastriaLoot",
+    "folder": "SynastriaLoot",
+    "repo": "https://github.com/danhicks853/synastrialoot.git",
+    "description": "Displays a list of items available in the one that are not attuned"
+  },
+  {
     "name": "Scoots' Stats",
     "folder": "ScootsStats",
     "repo": "https://github.com/SynScoots/ScootsStats.git",
