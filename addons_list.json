@@ -66,12 +66,6 @@
     "description": "Adds token tracking functionality."
   },
   {
-    "name": "Scoots' Unresponsive UI Patch",
-    "folder": "ScootsUnresponsiveUIPatch",
-    "repo": "https://github.com/SynScoots/ScootsUnresponsiveUIPatch.git",
-    "description": "Fixes issues with unresponsive UI elements."
-  },
-  {
     "name": "Scoots' Vendor Filter",
     "folder": "ScootsVendorFilter",
     "repo": "https://github.com/SynScoots/ScootsVendorFilter.git",
