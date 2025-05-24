@@ -18,6 +18,12 @@
     "description": "QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
   },
   {
+    "name": "Qt's Auto-Roller",
+    "folder": "qtRoll",
+    "repo": "https://github.com/RosemyneH/qtRoll.git",
+    "description": "Automatically rolls for loot while in a group"
+  },
+  {
     "name": "Scoots' Craft",
     "folder": "ScootsCraft",
     "repo": "https://github.com/SynScoots/ScootsCraft.git",
