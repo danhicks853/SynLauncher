@@ -60,16 +60,10 @@
     "description": "Instantly selects dialogue choices in dungeons."
   },
   {
-    "name": "Scoots' Tokens",
-    "folder": "ScootsTokens",
-    "repo": "https://github.com/SynScoots/ScootsTokens.git",
-    "description": "Adds token tracking functionality."
-  },
-  {
-    "name": "Scoots' Unresponsive UI Patch",
-    "folder": "ScootsUnresponsiveUIPatch",
-    "repo": "https://github.com/SynScoots/ScootsUnresponsiveUIPatch.git",
-    "description": "Fixes issues with unresponsive UI elements."
+    "name": "Scoots' Vendor Forge",
+    "folder": "ScootsVendorForge",
+    "repo": "https://github.com/SynScoots/ScootsVendorForge.git",
+    "description": "Replaces the previous token addon and adds options to continuuosly purchase until forged."
   },
   {
     "name": "Scoots' Vendor Filter",
