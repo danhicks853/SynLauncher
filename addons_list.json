@@ -1,5 +1,11 @@
 [
   {
+    "name": "SynastriaCoreLib",
+    "folder": "SynastriaCoreLib",
+    "repo": "https://github.com/imevul/SynastriaCoreLib.git",
+    "description": "Core library for Synastria addons"
+  },
+  {
     "name": "SynastriaLoot",
     "folder": "SynastriaLoot",
     "repo": "https://github.com/danhicks853/synastrialoot.git",
@@ -15,7 +21,7 @@
     "name": "Attune Helper",
     "folder": "AttuneHelper",
     "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
-    "description": "QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
+    "description": "(Requires SynastriaCoreLib) QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
   },
   {
     "name": "Qt's Auto-Roller",
