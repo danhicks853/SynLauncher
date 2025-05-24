@@ -4,6 +4,25 @@ const functions = require('./functions');
 const constants = require('./constants');
 const axios = require('axios');
 
+// Single instance lock
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (event, argv, workingDirectory) => {
+    // Focus the main window if the user tried to start a second instance
+    const wins = BrowserWindow.getAllWindows();
+    if (wins.length) {
+      const win = wins[0];
+      if (win.isMinimized()) win.restore();
+      win.focus();
+    }
+  });
+
+  // The rest of your app logic goes here
+
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -20,23 +39,25 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  functions.ensureConfigDir();
-  createWindow();
-});
+    functions.ensureConfigDir();
+    createWindow();
+  });
 
 ipcMain.handle('close-window', () => {
-  const win = BrowserWindow.getFocusedWindow();
-  if (win) win.close();
-});
+    const win = BrowserWindow.getFocusedWindow();
+    if (win) win.close();
+  });
 
-ipcMain.handle('check-config', () => {
-  return functions.configExists();
-});
+  ipcMain.handle('check-config', () => {
+    return functions.configExists();
+  });
 
-ipcMain.handle('save-config', (event, config) => {
-  functions.saveConfig(config);
-  return true;
-});
+  ipcMain.handle('save-config', (event, config) => {
+    functions.saveConfig(config);
+    return true;
+  });
+}
+
 
 // --- Unsigned update check logic ---
 ipcMain.handle('check-for-launcher-update', async () => {
