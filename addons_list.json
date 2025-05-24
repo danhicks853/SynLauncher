@@ -1,90 +1,105 @@
 [
   {
     "name": "SynastriaCoreLib",
+    "Author": "imevul",
     "folder": "SynastriaCoreLib",
     "repo": "https://github.com/imevul/SynastriaCoreLib.git",
     "description": "Core library for Synastria addons"
   },
   {
     "name": "SynastriaLoot",
+    "Author": "dromkal",
     "folder": "SynastriaLoot",
     "repo": "https://github.com/danhicks853/synastrialoot.git",
     "description": "Displays a list of items available in the one that are not attuned"
   },
   {
     "name": "Scoots' Stats",
+    "Author": "Scoots",
     "folder": "ScootsStats",
     "repo": "https://github.com/SynScoots/ScootsStats.git",
     "description": "This adds a stat panel to the right of your character panel"
   },
   {
     "name": "Attune Helper",
+    "Author": "Qt",
     "folder": "AttuneHelper",
     "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
     "description": "(Requires SynastriaCoreLib) QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
   },
   {
     "name": "Qt's Auto-Roller",
+    "Author": "Qt",
     "folder": "qtRoll",
     "repo": "https://github.com/RosemyneH/qtRoll.git",
     "description": "(Requires SynastriaCoreLib) Automatically rolls for loot while in a group"
   },
   {
     "name": "Scoots' Craft",
+    "Author": "Scoots",
     "folder": "ScootsCraft",
     "repo": "https://github.com/SynScoots/ScootsCraft.git",
     "description": "A complete overhaul of the profession UI, tailored to Synastria"
   },
   {
     "name": "ArkInventory (Attunements)",
+    "Author": "Scoots",
     "folder": "ArkInventory",
     "repo": "https://github.com/SynScoots/ArkInventory-modified-for-attunements-.git",
     "description": "This is a modified ArkInventory that adds support for attunements."
   },
   {
     "name": "Scoots' Combat Attune Watch",
+    "Author": "Scoots",
     "folder": "ScootsCombatAttuneWatch",
     "repo": "https://github.com/SynScoots/ScootsCombatAttuneWatch.git",
     "description": "Tracks attunement progress in combat."
   },
   {
     "name": "Scoots' Confirmation Skip",
+    "Author": "Scoots",
     "folder": "ScootsConfirmationSkip",
     "repo": "https://github.com/SynScoots/ScootsConfirmationSkip.git",
     "description": "Skips confirmation dialogue for equipping BoE and looting BoP items."
   },
   {
     "name": "Scoots' Quick Auction",
+    "Author": "Scoots",
     "folder": "ScootsQuickAuction",
     "repo": "https://github.com/SynScoots/ScootsQuickAuction.git",
     "description": "Rapidly create auctions at a specified price."
   },
   {
     "name": "Scoots' Rares",
+    "Author": "Scoots",
     "folder": "ScootsRares",
     "repo": "https://github.com/SynScoots/ScootsRares.git",
     "description": "Creates a chat link to automatically run .findnpc command when near a rare."
   },
   {
     "name": "Scoots' Speedrun",
+    "Author": "Scoots",
     "folder": "ScootsSpeedrun",
     "repo": "https://github.com/SynScoots/ScootsSpeedrun.git",
     "description": "Instantly selects dialogue choices in dungeons."
   },
   {
     "name": "Scoots' Vendor Forge",
+    "Author": "Scoots",
     "folder": "ScootsVendorForge",
     "repo": "https://github.com/SynScoots/ScootsVendorForge.git",
     "description": "Replaces the previous token addon and adds options to continuuosly purchase until forged."
   },
   {
     "name": "Scoots' Vendor Filter",
+    "Author": "Scoots",
     "folder": "ScootsVendorFilter",
     "repo": "https://github.com/SynScoots/ScootsVendorFilter.git",
     "description": "Converts vendor panels from paginated icons into a scrollable list."
   },
   {
     "name": "AtlasLoot Mythic",
+    "Author": "imevul",
     "folder": "AtlasLoot_Mythic",
     "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
     "description": "Adds mythic items to AtlasLoot."

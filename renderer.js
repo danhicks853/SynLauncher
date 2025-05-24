@@ -430,6 +430,16 @@ function showPlayButton(clientDir) {
       desc.style.marginRight = '14px';
       row.appendChild(desc);
 
+      // Author
+      const author = document.createElement('div');
+      author.textContent = addon.Author || addon.author || '—';
+      author.style.fontSize = '0.93rem';
+      author.style.color = '#8fd4ff';
+      author.style.flex = '0 0 100px';
+      author.style.marginRight = '14px';
+      author.style.textAlign = 'left';
+      row.appendChild(author);
+
       // Last updated
       // Helper for formatting dates as 'Apr 1 2025'
       function formatAddonDate(dateString) {
