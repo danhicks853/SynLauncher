@@ -18,7 +18,7 @@
     "Author": "Qt",
     "folder": "AttuneHelper",
     "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
-    "description": "(Requires SynastriaCoreLib) QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
+    "description": "QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
   },
   {
     "name": "AttuneProgress",
