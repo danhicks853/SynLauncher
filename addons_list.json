@@ -32,7 +32,7 @@
     "Author": "Qt",
     "folder": "qtRoll",
     "repo": "https://github.com/RosemyneH/qtRoll.git",
-    "description": "(Requires SynastriaCoreLib) Automatically rolls for loot while in a group"
+    "description": "Automatically rolls for loot while in a group"
   },
   {
     "name": "Scoots' Craft",
