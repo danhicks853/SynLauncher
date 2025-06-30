@@ -103,5 +103,12 @@
     "folder": "AtlasLoot_Mythic",
     "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
     "description": "Adds mythic items to AtlasLoot."
+  },
+  {
+    "name": "DromsInstanceTimer",
+    "Author": "dromkal",
+    "folder": "DromsInstanceTimer",
+    "repo": "https://github.com/danhicks853/DromsInstanceTimer-1.0.0.git",
+    "description": "Tracks instance entries for the 50/hour limit"
   }
 ]
