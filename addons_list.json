@@ -110,5 +110,19 @@
     "folder": "DromsInstanceTimer",
     "repo": "https://github.com/danhicks853/DromsInstanceTimer-1.0.0.git",
     "description": "Tracks instance entries for the 50/hour limit"
+  },
+  {
+    "name": "ElvUI",
+    "Author": "QT",
+    "folder": "ElvUI",
+    "repo": "https://github.com/RosemyneH/ElvUI_Attune.git",
+    "description": "Synastria-Compatible ElvUI Interface"
+  },
+  {
+    "name": "MehTrajectory",
+    "Author": "Meh",
+    "folder": "MehTrajectory",
+    "repo": "https://github.com/SynScoots/MehTrajectory.git",
+    "description": "Tracks the trajectory of movement on the map."
   }
 ]
