@@ -11,7 +11,7 @@ A simple Electron-based launcher for Synastria WoW.
 To develop this project, you need:
 - Python (>=3.6)
 - Visual Studio (with Desktop development with C++ workload)
-- npm (Node.js package manager)
+- Node.js
 
 ## Usage
 1. Install dependencies: `npm install`
