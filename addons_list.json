@@ -131,5 +131,12 @@
     "folder": "DromsTrashKillCount",
     "repo": "https://github.com/danhicks853/DromsKillCounter.git",
     "description": "Tracks kills."
+  },
+  {
+    "name": "WarpRing",
+    "Author": "Namira",
+    "folder": "WarpRing",
+    "repo": "https://github.com/danhicks853/namira_warpring.git",
+    "description": "Warp Ring UI."
   }
 ]
