@@ -11,14 +11,14 @@
     "Author": "Scoots",
     "folder": "ScootsStats",
     "repo": "https://github.com/SynScoots/ScootsStats.git",
-    "description": "This adds a stat panel to the right of your character panel"
+    "description": "Adds a stat panel to the character panel"
   },
   {
     "name": "Attune Helper",
     "Author": "Qt",
     "folder": "AttuneHelper",
     "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
-    "description": "Auto-equips attuneable gear and more"
+    "description": "Auto-equips attuneable gear"
   },
   {
     "name": "AttuneProgress",
