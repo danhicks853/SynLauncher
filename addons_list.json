@@ -124,5 +124,12 @@
     "folder": "MehTrajectory",
     "repo": "https://github.com/SynScoots/MehTrajectory.git",
     "description": "Tracks the trajectory of movement on the map."
+  },
+  {
+    "name": "DromsTrashKillCount",
+    "Author": "dromkal",
+    "folder": "DromsTrashKillCount",
+    "repo": "https://github.com/danhicks853/DromsKillCounter.git",
+    "description": "Tracks kills."
   }
 ]
