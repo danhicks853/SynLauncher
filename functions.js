@@ -161,6 +161,12 @@ async function fetchLatestCommitHash(repo) {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
+        // Log 403/429 status codes for rate limiting
+        if (res.statusCode === 403) {
+          console.error(`[GitHub API] 403 Forbidden (rate limited) for repo: ${repo}`);
+        } else if (res.statusCode === 429) {
+          console.error(`[GitHub API] 429 Too Many Requests for repo: ${repo}`);
+        }
         try {
           // Debug: print the raw API response for this repo
           if (repo && repo.includes('danhicks853/slg')) {
@@ -292,39 +298,49 @@ async function downloadAndExtractAddon(addon, clientDir) {
   if (!zipDownloaded) {
     throw lastErr || new Error('Failed to download addon zip from tried branches: ' + branchesToTry.join(', '));
   }
-  // Extract only the src folder inside the zip to Addons dir
+  // Refactored: Extract only folders containing at least one .toc file (WoW addon folders)
   const zip = new AdmZip(tmpZip);
   const entries = zip.getEntries();
-  const srcPrefix = entries[0].entryName.split('/')[0] + '/src/';
   const addonDir = path.join(clientDir, 'Interface', 'AddOns');
   if (!fs.existsSync(addonDir)) fs.mkdirSync(addonDir, { recursive: true });
-  // Find all top-level folders in src/
-  const topFolders = new Set();
+
+  // Map: folder path (relative to zip root) -> hasTOC
+  const folderTOCMap = {};
   entries.forEach(entry => {
-    if (entry.entryName.startsWith(srcPrefix) && entry.isDirectory) {
-      const rel = entry.entryName.substring(srcPrefix.length);
-      const top = rel.split('/')[0];
-      if (top) topFolders.add(top);
+    if (!entry.isDirectory && entry.entryName.match(/\.toc$/i)) {
+      // Find the folder containing this .toc file
+      const parts = entry.entryName.split('/');
+      if (parts.length > 1) {
+        // e.g. ElvUI_Attune-master/ElvUI/ElvUI.toc -> ElvUI_Attune-master/ElvUI
+        const folder = parts.slice(0, -1).join('/');
+        folderTOCMap[folder] = true;
+      }
     }
   });
-  // For each top-level folder, extract all its contents to Interface/AddOns/<folder>
-  topFolders.forEach(folder => {
-    const destAddon = path.join(addonDir, folder);
+  const tocFolders = Object.keys(folderTOCMap);
+  if (tocFolders.length === 0) {
+    throw new Error('No folders containing .toc files found in zip. Cannot extract addon.');
+  }
+  tocFolders.forEach(folder => {
+    // Find all entries under this folder
+    const entriesInFolder = entries.filter(e => e.entryName.startsWith(folder + '/') && e.entryName.length > folder.length + 1);
+    const destAddon = path.join(addonDir, path.basename(folder));
     if (fs.existsSync(destAddon)) {
       fs.rmSync(destAddon, { recursive: true, force: true });
     }
-    entries.forEach(entry => {
-      if (entry.entryName.startsWith(srcPrefix + folder + '/')) {
-        const relPath = entry.entryName.substring(srcPrefix.length + folder.length + 1);
-        if (relPath && !entry.isDirectory) {
-          const destPath = path.join(destAddon, relPath);
-          fs.mkdirSync(path.dirname(destPath), { recursive: true });
-          fs.writeFileSync(destPath, entry.getData());
-        }
+    entriesInFolder.forEach(entry => {
+      if (!entry.isDirectory) {
+        const relPath = entry.entryName.substring(folder.length + 1);
+        const destPath = path.join(destAddon, relPath);
+        console.log('[AddonExtract] Extracting', entry.entryName, 'to', destPath);
+        fs.mkdirSync(path.dirname(destPath), { recursive: true });
+        fs.writeFileSync(destPath, entry.getData());
       }
     });
   });
+
   fs.unlinkSync(tmpZip);
+
 }
 
 /** Uninstalls addon by removing its folder */
