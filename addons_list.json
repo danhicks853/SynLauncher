@@ -7,18 +7,18 @@
     "description": "Displays a list of unattuned items in the current zone."
   },
   {
-    "name": "Stats",
+    "name": "Scoots' Stats",
     "Author": "Scoots",
     "folder": "ScootsStats",
     "repo": "https://github.com/SynScoots/ScootsStats.git",
-    "description": "Adds a stat panel to the character panel"
+    "description": "This adds a stat panel to the right of your character panel"
   },
   {
     "name": "Attune Helper",
     "Author": "Qt",
     "folder": "AttuneHelper",
     "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
-    "description": "Auto-equips attuneable gear"
+    "description": "Auto-equips attuneable gear and more"
   },
   {
     "name": "AttuneProgress",
@@ -28,14 +28,14 @@
     "description": "Tracks attunement progress in inventory."
   },
   {
-    "name": "Auto-Roller",
+    "name": "Qt's Auto-Roller",
     "Author": "Qt",
     "folder": "qtRoll",
     "repo": "https://github.com/RosemyneH/qtRoll.git",
     "description": "Automatically rolls for loot while in a group"
   },
   {
-    "name": "Craft",
+    "name": "Scoots' Craft",
     "Author": "Scoots",
     "folder": "ScootsCraft",
     "repo": "https://github.com/SynScoots/ScootsCraft.git",
@@ -49,63 +49,63 @@
     "description": "Adds support for attunements."
   },
   {
-    "name": "Combat Attune Watch",
+    "name": "Scoots' Combat Attune Watch",
     "Author": "Scoots",
     "folder": "ScootsCombatAttuneWatch",
     "repo": "https://github.com/SynScoots/ScootsCombatAttuneWatch.git",
     "description": "Tracks attunement progress in combat."
   },
   {
-    "name": "Confirmation Skip",
+    "name": "Scoots' Confirmation Skip",
     "Author": "Scoots",
     "folder": "ScootsConfirmationSkip",
     "repo": "https://github.com/SynScoots/ScootsConfirmationSkip.git",
     "description": "Skips confirmation for equipping BoE and looting BoP items."
   },
   {
-    "name": "Quick Auction",
+    "name": "Scoots' Quick Auction",
     "Author": "Scoots",
     "folder": "ScootsQuickAuction",
     "repo": "https://github.com/SynScoots/ScootsQuickAuction.git",
     "description": "Rapidly create auctions at a specified price."
   },
   {
-    "name": "Rares",
+    "name": "Scoots' Rares",
     "Author": "Scoots",
     "folder": "ScootsRares",
     "repo": "https://github.com/SynScoots/ScootsRares.git",
     "description": "Creates a chat link to run .findnpc when near a rare."
   },
   {
-    "name": "Speedrun",
+    "name": "Scoots' Speedrun",
     "Author": "Scoots",
     "folder": "ScootsSpeedrun",
     "repo": "https://github.com/SynScoots/ScootsSpeedrun.git",
     "description": "Instantly selects dialogue choices in dungeons."
   },
   {
-    "name": "Vendor Forge",
+    "name": "Scoots' Vendor Forge",
     "Author": "Scoots",
     "folder": "ScootsVendorForge",
     "repo": "https://github.com/SynScoots/ScootsVendorForge.git",
     "description": "Continuously purchase vendor items until forged."
   },
   {
-    "name": "Vendor Filter",
+    "name": "Scoots' Vendor Filter",
     "Author": "Scoots",
     "folder": "ScootsVendorFilter",
     "repo": "https://github.com/SynScoots/ScootsVendorFilter.git",
     "description": "Converts vendor to scrollable list."
   },
   {
-    "name": "AtlasLoot",
+    "name": "AtlasLoot Mythic",
     "Author": "imevul",
     "folder": "AtlasLoot_Mythic",
     "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
     "description": "Adds mythic items to AtlasLoot."
   },
   {
-    "name": "InstanceTimer",
+    "name": "DromsInstanceTimer",
     "Author": "dromkal",
     "folder": "DromsInstanceTimer",
     "repo": "https://github.com/danhicks853/DromsInstanceTimer-1.0.0.git",
