@@ -7,6 +7,12 @@ A simple Electron-based launcher for Synastria WoW.
 - If missing, downloads the WoW client via WebTorrent magnet link.
 - Shows download progress in the UI.
 
+## Development Requirements
+To develop this project, you need:
+- Python (>=3.6)
+- Visual Studio (with Desktop development with C++ workload)
+- npm (Node.js package manager)
+
 ## Usage
 1. Install dependencies: `npm install`
 2. Run the launcher: `npm start`

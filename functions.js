@@ -240,6 +240,8 @@ async function downloadAndExtractAddon(addon, clientDir) {
     defaultBranch = 'master';
   } else if (addon.repo.includes('AtlasLoot_Mythic')) {
     defaultBranch = 'master';
+  } else if (addon.repo.includes('ElvUI_Attune')) {
+    defaultBranch = 'master';
   } else {
     // --- Fetch default branch from GitHub API for all others ---
     try {
