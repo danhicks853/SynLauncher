@@ -4,10 +4,10 @@
     "Author": "dromkal",
     "folder": "SynastriaLoot",
     "repo": "https://github.com/danhicks853/synastrialoot.git",
-    "description": "Displays a list of items available in the one that are not attuned"
+    "description": "Displays a list of unattuned items in the current zone."
   },
   {
-    "name": "Scoots' Stats",
+    "name": "Stats",
     "Author": "Scoots",
     "folder": "ScootsStats",
     "repo": "https://github.com/SynScoots/ScootsStats.git",
@@ -18,7 +18,7 @@
     "Author": "Qt",
     "folder": "AttuneHelper",
     "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
-    "description": "QT's AttuneHelper Addon: Auto-equips attuneable gear and more"
+    "description": "Auto-equips attuneable gear and more"
   },
   {
     "name": "AttuneProgress",
@@ -28,84 +28,84 @@
     "description": "Tracks attunement progress in inventory."
   },
   {
-    "name": "Qt's Auto-Roller",
+    "name": "Auto-Roller",
     "Author": "Qt",
     "folder": "qtRoll",
     "repo": "https://github.com/RosemyneH/qtRoll.git",
     "description": "Automatically rolls for loot while in a group"
   },
   {
-    "name": "Scoots' Craft",
+    "name": "Craft",
     "Author": "Scoots",
     "folder": "ScootsCraft",
     "repo": "https://github.com/SynScoots/ScootsCraft.git",
-    "description": "A complete overhaul of the profession UI, tailored to Synastria"
+    "description": "A complete overhaul of the profession UI"
   },
   {
-    "name": "ArkInventory (Attunements)",
+    "name": "ArkInventory",
     "Author": "Scoots",
     "folder": "ArkInventory",
     "repo": "https://github.com/SynScoots/ArkInventory-modified-for-attunements-.git",
-    "description": "This is a modified ArkInventory that adds support for attunements."
+    "description": "Adds support for attunements."
   },
   {
-    "name": "Scoots' Combat Attune Watch",
+    "name": "Combat Attune Watch",
     "Author": "Scoots",
     "folder": "ScootsCombatAttuneWatch",
     "repo": "https://github.com/SynScoots/ScootsCombatAttuneWatch.git",
     "description": "Tracks attunement progress in combat."
   },
   {
-    "name": "Scoots' Confirmation Skip",
+    "name": "Confirmation Skip",
     "Author": "Scoots",
     "folder": "ScootsConfirmationSkip",
     "repo": "https://github.com/SynScoots/ScootsConfirmationSkip.git",
-    "description": "Skips confirmation dialogue for equipping BoE and looting BoP items."
+    "description": "Skips confirmation for equipping BoE and looting BoP items."
   },
   {
-    "name": "Scoots' Quick Auction",
+    "name": "Quick Auction",
     "Author": "Scoots",
     "folder": "ScootsQuickAuction",
     "repo": "https://github.com/SynScoots/ScootsQuickAuction.git",
     "description": "Rapidly create auctions at a specified price."
   },
   {
-    "name": "Scoots' Rares",
+    "name": "Rares",
     "Author": "Scoots",
     "folder": "ScootsRares",
     "repo": "https://github.com/SynScoots/ScootsRares.git",
-    "description": "Creates a chat link to automatically run .findnpc command when near a rare."
+    "description": "Creates a chat link to run .findnpc when near a rare."
   },
   {
-    "name": "Scoots' Speedrun",
+    "name": "Speedrun",
     "Author": "Scoots",
     "folder": "ScootsSpeedrun",
     "repo": "https://github.com/SynScoots/ScootsSpeedrun.git",
     "description": "Instantly selects dialogue choices in dungeons."
   },
   {
-    "name": "Scoots' Vendor Forge",
+    "name": "Vendor Forge",
     "Author": "Scoots",
     "folder": "ScootsVendorForge",
     "repo": "https://github.com/SynScoots/ScootsVendorForge.git",
-    "description": "Replaces the previous token addon and adds options to continuuosly purchase until forged."
+    "description": "Continuously purchase vendor items until forged."
   },
   {
-    "name": "Scoots' Vendor Filter",
+    "name": "Vendor Filter",
     "Author": "Scoots",
     "folder": "ScootsVendorFilter",
     "repo": "https://github.com/SynScoots/ScootsVendorFilter.git",
-    "description": "Converts vendor panels from paginated icons into a scrollable list."
+    "description": "Converts vendor to scrollable list."
   },
   {
-    "name": "AtlasLoot Mythic",
+    "name": "AtlasLoot",
     "Author": "imevul",
     "folder": "AtlasLoot_Mythic",
     "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
     "description": "Adds mythic items to AtlasLoot."
   },
   {
-    "name": "DromsInstanceTimer",
+    "name": "InstanceTimer",
     "Author": "dromkal",
     "folder": "DromsInstanceTimer",
     "repo": "https://github.com/danhicks853/DromsInstanceTimer-1.0.0.git",
