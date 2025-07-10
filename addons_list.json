@@ -1,5 +1,19 @@
 [
   {
+    "name": "[NEW!] The Journal",
+    "Author": "Qt",
+    "folder": "TheJournal",
+    "repo": "https://github.com/RosemyneH/TheJournal.git",
+    "description": "Dungeon Journal with Item and Boss Details"
+  },
+  {
+    "name": "[NEW!] WarpRing",
+    "Author": "Namira",
+    "folder": "WarpRing",
+    "repo": "https://github.com/danhicks853/namira_warpring.git",
+    "description": "Warp Ring UI."
+  },
+  {
     "name": "SynastriaLoot",
     "Author": "dromkal",
     "folder": "SynastriaLoot",
@@ -131,12 +145,5 @@
     "folder": "DromsTrashKillCount",
     "repo": "https://github.com/danhicks853/DromsKillCounter.git",
     "description": "Tracks kills."
-  },
-  {
-    "name": "WarpRing",
-    "Author": "Namira",
-    "folder": "WarpRing",
-    "repo": "https://github.com/danhicks853/namira_warpring.git",
-    "description": "Warp Ring UI."
   }
 ]
