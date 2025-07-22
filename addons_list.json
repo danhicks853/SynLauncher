@@ -1,24 +1,17 @@
 [
   {
-    "name": "[NEW!] The Journal",
+    "name": "The Journal",
     "Author": "Qt",
     "folder": "TheJournal",
     "repo": "https://github.com/RosemyneH/TheJournal.git",
     "description": "Dungeon Journal with Item and Boss Details"
   },
   {
-    "name": "[NEW!] WarpRing",
+    "name": "WarpRing",
     "Author": "Namira",
     "folder": "WarpRing",
     "repo": "https://github.com/danhicks853/namira_warpring.git",
     "description": "Warp Ring UI."
-  },
-  {
-    "name": "SynastriaLoot",
-    "Author": "dromkal",
-    "folder": "SynastriaLoot",
-    "repo": "https://github.com/danhicks853/synastrialoot.git",
-    "description": "Displays a list of unattuned items in the current zone."
   },
   {
     "name": "Scoots' Stats",
@@ -119,31 +112,10 @@
     "description": "Adds mythic items to AtlasLoot."
   },
   {
-    "name": "DromsInstanceTimer",
-    "Author": "dromkal",
-    "folder": "DromsInstanceTimer",
-    "repo": "https://github.com/danhicks853/DromsInstanceTimer-1.0.0.git",
-    "description": "Tracks instance entries for the 50/hour limit"
-  },
-  {
-    "name": "ElvUI",
-    "Author": "QT",
-    "folder": "ElvUI",
-    "repo": "https://github.com/RosemyneH/ElvUI_Attune.git",
-    "description": "Synastria-Compatible ElvUI Interface"
-  },
-  {
     "name": "MehTrajectory",
     "Author": "Meh",
     "folder": "MehTrajectory",
     "repo": "https://github.com/SynScoots/MehTrajectory.git",
     "description": "Tracks the trajectory of movement on the map."
-  },
-  {
-    "name": "DromsTrashKillCount",
-    "Author": "dromkal",
-    "folder": "DromsTrashKillCount",
-    "repo": "https://github.com/danhicks853/DromsKillCounter.git",
-    "description": "Tracks kills."
   }
 ]
