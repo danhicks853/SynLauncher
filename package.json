@@ -14,7 +14,7 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "danhicks853",
+        "owner": "binnesman",
         "repo": "SynLauncher",
         "releaseType": "release"
       }
