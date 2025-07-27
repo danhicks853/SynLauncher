@@ -1,6 +1,6 @@
 # Synastria WoW Launcher
 
-A simple Electron-based launcher for Synastria WoW.
+A simple Electron-based launcher for Synastria WoW. Originally created by Dromkal.
 
 ## Features
 - Checks for config in `%USERPROFILE%\Synastria`.
