@@ -62,7 +62,7 @@ ipcMain.handle('close-window', () => {
 // --- Unsigned update check logic ---
 ipcMain.handle('check-for-launcher-update', async () => {
   try {
-    const repoOwner = 'danhicks853';
+    const repoOwner = 'binnesman';
     const repoName = 'SynLauncher';
     const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
     const resp = await axios.get(apiUrl, {
