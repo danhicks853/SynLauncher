@@ -1,5 +1,12 @@
 [
   {
+    "name": "Synastria loot",
+    "Author": "Dromkal",
+    "folder": "synastrialoot",
+    "repo": "https://github.com/binnesman/synastrialoot.git",
+    "description": "Queries the database to show attuneable loot in your current zone"
+  },
+  {
     "name": "The Journal",
     "Author": "Qt",
     "folder": "TheJournal",
@@ -10,7 +17,7 @@
     "name": "WarpRing",
     "Author": "Namira",
     "folder": "WarpRing",
-    "repo": "https://github.com/danhicks853/namira_warpring.git",
+    "repo": "https://github.com/binnesman/namira_warpring.git",
     "description": "Warp Ring UI."
   },
   {
@@ -24,7 +31,7 @@
     "name": "Attune Helper",
     "Author": "Qt",
     "folder": "AttuneHelper",
-    "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
+    "repo": "https://github.com/binnesman/AttuneHelperHosting.git",
     "description": "Auto-equips attuneable gear and more"
   },
   {
@@ -117,5 +124,26 @@
     "folder": "MehTrajectory",
     "repo": "https://github.com/SynScoots/MehTrajectory.git",
     "description": "Tracks the trajectory of movement on the map."
+  },
+  {
+    "name": "Synastria loot",
+    "Author": "Dromkal",
+    "folder": "synastrialoot",
+    "repo": "https://github.com/binnesman/synastrialoot.git",
+    "description": "Queries the database to show attuneable loot in your current zone"
+  },
+  {
+    "name": "Droms Instance Timer",
+    "Author": "Dromkal",
+    "folder": "DromsInstanceTimer",
+    "repo": "https://github.com/binnesman/DromsInstanceTimer-1.0.0.git",
+    "description": "Tracks how many instance you've entered in the last hour"
+  },
+  {
+    "name": "Droms Kill Counter",
+    "Author": "Dromkal",
+    "folder": "DromsTrashKillCount",
+    "repo": "https://github.com/binnesman/DromsKillCounter.git",
+    "description": "Queries the database to show attuneable loot in your current zone"
   }
 ]
