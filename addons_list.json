@@ -1,12 +1,5 @@
 [
   {
-    "name": "Synastria loot",
-    "Author": "Dromkal",
-    "folder": "synastrialoot",
-    "repo": "https://github.com/binnesman/synastrialoot.git",
-    "description": "Queries the database to show attuneable loot in your current zone"
-  },
-  {
     "name": "The Journal",
     "Author": "Qt",
     "folder": "TheJournal",
@@ -124,13 +117,6 @@
     "folder": "MehTrajectory",
     "repo": "https://github.com/SynScoots/MehTrajectory.git",
     "description": "Tracks the trajectory of movement on the map."
-  },
-  {
-    "name": "Synastria loot",
-    "Author": "Dromkal",
-    "folder": "synastrialoot",
-    "repo": "https://github.com/binnesman/synastrialoot.git",
-    "description": "Queries the database to show attuneable loot in your current zone"
   },
   {
     "name": "Droms Instance Timer",
