@@ -7,13 +7,6 @@
     "description": "Dungeon Journal with Item and Boss Details"
   },
   {
-    "name": "Synastria Build Manager",
-    "Author": "Namira",
-    "folder": "SynastriaBuildManager",
-    "repo": "https://github.com/Lubricated/SynastriaBuildManager.git",
-    "description": "Adds new button to the perk manager where you can export and import perks+talents."
-  },
-  {
     "name": "WarpRing",
     "Author": "Namira",
     "folder": "WarpRing",
@@ -31,7 +24,7 @@
     "name": "Attune Helper",
     "Author": "Qt",
     "folder": "AttuneHelper",
-    "repo": "https://github.com/binnesman/AttuneHelperHosting.git",
+    "repo": "https://github.com/RosemyneH/AttuneHelperHosting.git",
     "description": "Auto-equips attuneable gear and more"
   },
   {
