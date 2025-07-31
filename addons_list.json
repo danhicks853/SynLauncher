@@ -1,5 +1,12 @@
 [
   {
+    "name": "Synastria Build Manager",
+    "Author": "Namira",
+    "folder": "SynastriaBuildManager",
+    "repo": "https://github.com/Lubricated/SynastriaBuildManager.git",
+    "description": "Adds new button to the perk manager where you can export and import perks+talents"
+  },
+  {
     "name": "The Journal",
     "Author": "Qt",
     "folder": "TheJournal",
