@@ -42,11 +42,25 @@
     "description": "Queries the database to show attuneable loot in your current zone"
   },
   {
+    "name": "ElveUI",
+    "Author": "QT",
+    "folder": "ElvUI",
+    "repo": "https://github.com/RosemyneH/ElvUI_Attune.git",
+    "description": "Queries the database to show attuneable loot in your current zone"
+  },
+  {
     "name": "MehTrajectory",
     "Author": "Meh",
     "folder": "MehTrajectory",
     "repo": "https://github.com/SynScoots/MehTrajectory.git",
     "description": "Tracks the trajectory of movement on the map."
+  },
+  {
+    "name": "Postal",
+    "Author": "Lulleh",
+    "folder": "Postal",
+    "repo": "https://github.com/binnesman/Postal.git",
+    "description": "Postal mod x10 faster 'Open All' speed."
   },
   {
     "name": "Qt's Auto-Roller",
@@ -123,6 +137,13 @@
     "Author": "Namira",
     "folder": "SynastriaBuildManager",
     "repo": "https://github.com/Lubricated/SynastriaBuildManager.git",
+    "description": "Adds new button to the perk manager where you can export and import perks+talents"
+  },
+  {
+    "name": "Synastria Tooltip Enhancer",
+    "Author": "Lulleh",
+    "folder": "SynastriaTooltipEnhancer",
+    "repo": "https://github.com/binnesman/Synastria-Tooltip-Enhancer.git",
     "description": "Adds new button to the perk manager where you can export and import perks+talents"
   },
   {
