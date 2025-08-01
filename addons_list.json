@@ -42,13 +42,6 @@
     "description": "Queries the database to show attuneable loot in your current zone"
   },
   {
-    "name": "ElveUI",
-    "Author": "QT",
-    "folder": "ElvUI",
-    "repo": "https://github.com/RosemyneH/ElvUI_Attune.git",
-    "description": "Queries the database to show attuneable loot in your current zone"
-  },
-  {
     "name": "MehTrajectory",
     "Author": "Meh",
     "folder": "MehTrajectory",
