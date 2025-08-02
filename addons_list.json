@@ -1,30 +1,23 @@
 [
   {
-    "name": "The Journal",
-    "Author": "Qt",
-    "folder": "TheJournal",
-    "repo": "https://github.com/RosemyneH/TheJournal.git",
-    "description": "Dungeon Journal with Item and Boss Details"
-  },
-  {
-    "name": "WarpRing",
-    "Author": "Namira",
-    "folder": "WarpRing",
-    "repo": "https://github.com/danhicks853/namira_warpring.git",
-    "description": "Warp Ring UI."
-  },
-  {
-    "name": "Scoots' Stats",
+    "name": "ArkInventory",
     "Author": "Scoots",
-    "folder": "ScootsStats",
-    "repo": "https://github.com/SynScoots/ScootsStats.git",
-    "description": "This adds a stat panel to the right of your character panel"
+    "folder": "ArkInventory",
+    "repo": "https://github.com/SynScoots/ArkInventory-modified-for-attunements-.git",
+    "description": "Adds support for attunements."
+  },
+  {
+    "name": "AtlasLoot Mythic",
+    "Author": "imevul",
+    "folder": "AtlasLoot_Mythic",
+    "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
+    "description": "Adds mythic items to AtlasLoot."
   },
   {
     "name": "Attune Helper",
     "Author": "Qt",
     "folder": "AttuneHelper",
-    "repo": "https://github.com/danhicks853/AttuneHelperHosting.git",
+    "repo": "https://github.com/RosemyneH/AttuneHelperHosting.git",
     "description": "Auto-equips attuneable gear and more"
   },
   {
@@ -35,25 +28,46 @@
     "description": "Tracks attunement progress in inventory."
   },
   {
+    "name": "Droms Instance Timer",
+    "Author": "Dromkal",
+    "folder": "DromsInstanceTimer",
+    "repo": "https://github.com/binnesman/DromsInstanceTimer-1.0.0.git",
+    "description": "Tracks how many instance you've entered in the last hour"
+  },
+  {
+    "name": "Droms Kill Counter",
+    "Author": "Dromkal",
+    "folder": "DromsTrashKillCount",
+    "repo": "https://github.com/binnesman/DromsKillCounter.git",
+    "description": "Queries the database to show attuneable loot in your current zone"
+  },
+  {
+    "name": "ElveUI",
+    "Author": "QT",
+    "folder": "ElvUI",
+    "repo": "https://github.com/RosemyneH/ElvUI_Attune.git",
+    "description": "ElveUI Mod for Synastria by QT"
+  },
+  {
+    "name": "MehTrajectory",
+    "Author": "Meh",
+    "folder": "MehTrajectory",
+    "repo": "https://github.com/SynScoots/MehTrajectory.git",
+    "description": "Tracks the trajectory of movement on the map."
+  },
+  {
+    "name": "Postal",
+    "Author": "Lulleh",
+    "folder": "Postal",
+    "repo": "https://github.com/binnesman/Postal.git",
+    "description": "Postal mod x10 faster 'Open All' speed."
+  },
+  {
     "name": "Qt's Auto-Roller",
     "Author": "Qt",
     "folder": "qtRoll",
     "repo": "https://github.com/RosemyneH/qtRoll.git",
     "description": "Automatically rolls for loot while in a group"
-  },
-  {
-    "name": "Scoots' Craft",
-    "Author": "Scoots",
-    "folder": "ScootsCraft",
-    "repo": "https://github.com/SynScoots/ScootsCraft.git",
-    "description": "A complete overhaul of the profession UI"
-  },
-  {
-    "name": "ArkInventory",
-    "Author": "Scoots",
-    "folder": "ArkInventory",
-    "repo": "https://github.com/SynScoots/ArkInventory-modified-for-attunements-.git",
-    "description": "Adds support for attunements."
   },
   {
     "name": "Scoots' Combat Attune Watch",
@@ -68,6 +82,13 @@
     "folder": "ScootsConfirmationSkip",
     "repo": "https://github.com/SynScoots/ScootsConfirmationSkip.git",
     "description": "Skips confirmation for equipping BoE and looting BoP items."
+  },
+  {
+    "name": "Scoots' Craft",
+    "Author": "Scoots",
+    "folder": "ScootsCraft",
+    "repo": "https://github.com/SynScoots/ScootsCraft.git",
+    "description": "A complete overhaul of the profession UI"
   },
   {
     "name": "Scoots' Quick Auction",
@@ -91,11 +112,11 @@
     "description": "Instantly selects dialogue choices in dungeons."
   },
   {
-    "name": "Scoots' Vendor Forge",
+    "name": "Scoots' Stats",
     "Author": "Scoots",
-    "folder": "ScootsVendorForge",
-    "repo": "https://github.com/SynScoots/ScootsVendorForge.git",
-    "description": "Continuously purchase vendor items until forged."
+    "folder": "ScootsStats",
+    "repo": "https://github.com/SynScoots/ScootsStats.git",
+    "description": "This adds a stat panel to the right of your character panel"
   },
   {
     "name": "Scoots' Vendor Filter",
@@ -105,17 +126,38 @@
     "description": "Converts vendor to scrollable list."
   },
   {
-    "name": "AtlasLoot Mythic",
-    "Author": "imevul",
-    "folder": "AtlasLoot_Mythic",
-    "repo": "https://github.com/imevul/AtlasLoot_Mythic.git",
-    "description": "Adds mythic items to AtlasLoot."
+    "name": "Scoots' Vendor Forge",
+    "Author": "Scoots",
+    "folder": "ScootsVendorForge",
+    "repo": "https://github.com/SynScoots/ScootsVendorForge.git",
+    "description": "Continuously purchase vendor items until forged."
   },
   {
-    "name": "MehTrajectory",
-    "Author": "Meh",
-    "folder": "MehTrajectory",
-    "repo": "https://github.com/SynScoots/MehTrajectory.git",
-    "description": "Tracks the trajectory of movement on the map."
+    "name": "Synastria Build Manager",
+    "Author": "Namira",
+    "folder": "SynastriaBuildManager",
+    "repo": "https://github.com/Lubricated/SynastriaBuildManager.git",
+    "description": "Adds new button to the perk manager where you can export and import perks+talents"
+  },
+  {
+    "name": "Synastria Tooltip Enhancer",
+    "Author": "Lulleh",
+    "folder": "SynastriaTooltipEnhancer",
+    "repo": "https://github.com/binnesman/Synastria-Tooltip-Enhancer.git",
+    "description": "Adds new button to the perk manager where you can export and import perks+talents"
+  },
+  {
+    "name": "The Journal",
+    "Author": "Qt",
+    "folder": "TheJournal",
+    "repo": "https://github.com/RosemyneH/TheJournal.git",
+    "description": "Dungeon Journal with Item and Boss Details"
+  },
+  {
+    "name": "WarpRing",
+    "Author": "Namira",
+    "folder": "WarpRing",
+    "repo": "https://github.com/binnesman/namira_warpring.git",
+    "description": "Warp Ring UI."
   }
 ]
